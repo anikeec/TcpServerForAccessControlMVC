@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+      
 <style type="text/css">
     .tg  {border-collapse:collapse;border-spacing:0;}
     .tg th{font-family:Arial, sans-serif;font-size:12px;font-weight:normal;padding:1px 10px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
@@ -8,7 +10,7 @@
 </style>
 
 <body>
-<h1>Welcome to Spring, {{ name }}</h1>
+<h1>Welcome to Spring, <span th:text="${name}"></span></h1>
 <h2>Cards:</h2>
 <table class="tg">
   <tr>
@@ -16,15 +18,13 @@
     <th class="tg-0lax"><h3>cardNumber</h3></th>
     <th class="tg-0lax"><h3>userId</h3></th>
   </tr>
-{{#cardList}}
-  <tr>
-    <th class="tg-0lax"><h3>{{cardId}}</h3></th>
-    <th class="tg-0lax"><h3>{{cardNumber}}</h3></th>
-    <th class="tg-0lax"><h3>{{userId}}</h3></th>
+  <tr th:each="card : ${cardList}">
+    <th class="tg-0lax" th:text="${card.cardId}"><h3></h3></th>
+    <th class="tg-0lax" th:text="${card.cardNumber}"><h3></h3></th>
+    <th class="tg-0lax" th:text="${card.userId}"><h3></h3></th>
   </tr>
-{{/cardList}}
 </table>
-
+<!--
 <h2>Devices:</h2>
 <table class="tg">
   <tr>
@@ -41,7 +41,7 @@
 {{/deviceList}}
 </table>
 
-<!--
+
 <h2>AccessMessages:</h2>
 <table class="tg">
   <tr>
