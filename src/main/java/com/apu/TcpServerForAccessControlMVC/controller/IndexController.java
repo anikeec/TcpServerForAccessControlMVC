@@ -1,4 +1,4 @@
-package com.apu.TcpServerForAccessControlMVC;
+package com.apu.TcpServerForAccessControlMVC.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,13 +31,13 @@ public class IndexController {
     @GetMapping("/")
     public ModelAndView index() {
         Map<String, Object> model = new HashMap<>();
-        model.put("name", "Alexey");
+        model.put("name", "Friend");
         List<Card> cardList = cardRepository.findAll();
         model.put("cardList", cardList);
         List<Device> deviceList = deviceRepository.findAll();
         model.put("deviceList", deviceList);
-        List<AccessMessage> amList = accessMessageRepository.findAll();
-        model.put("amList", amList);
+//        List<AccessMessage> amList = accessMessageRepository.findAll();
+//        model.put("amList", amList);
         return new ModelAndView("index", model);
     }
 }
