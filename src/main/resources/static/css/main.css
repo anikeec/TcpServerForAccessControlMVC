@@ -1,0 +1,15 @@
+.container {
+/* 	background: yellow; */
+}
+.row {
+	height: 40px;
+}
+#header {
+    background: #0776A0;
+}
+#table .row:nth-child(odd) {
+	background: #83D0ED;
+}
+#table .row:nth-child(even) {
+    background: #58B7DB;
+}

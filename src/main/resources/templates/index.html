@@ -3,27 +3,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
       
-<style type="text/css">
-    .tg  {border-collapse:collapse;border-spacing:0;}
-    .tg th{font-family:Arial, sans-serif;font-size:12px;font-weight:normal;padding:1px 10px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-    .tg .tg-0lax{text-align:left;vertical-align:top}
-</style>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    
+    <title>Bootstrap 4</title>
+</head>
+      
 <body>
-<h1>Welcome to Spring, <span th:text="${name}"></span></h1>
-<h2>Cards:</h2>
-<table class="tg">
-  <tr>
-    <th class="tg-0lax"><h3>cardId</h3></th>
-    <th class="tg-0lax"><h3>cardNumber</h3></th>
-    <th class="tg-0lax"><h3>userId</h3></th>
-  </tr>
-  <tr th:each="card : ${cardList}">
-    <th class="tg-0lax" th:text="${card.cardId}"><h3></h3></th>
-    <th class="tg-0lax" th:text="${card.cardNumber}"><h3></h3></th>
-    <th class="tg-0lax" th:text="${card.userId}"><h3></h3></th>
-  </tr>
-</table>
+	<div class="container">
+	    <div class="row">
+	        <div class="col">
+		       <h2>Welcome to Spring, <span th:text="${name}"></span></h2>
+		    </div>
+		</div>
+		<div class="row">
+		   <div class="col">
+		       <h3>Cards:</h3>
+		   </div>
+		</div>
+		<div class="row" id="header">
+	       <div class="col-2"><h5>cardId</h5></div>
+	       <div class="col"><h5>cardNumber</h5></div>
+	       <div class="col"><h5>userId</h5></div>
+	    </div>
+	    <div id="table">
+	    <div class="row" th:each="card : ${cardList}">
+	        <div class="col-2">
+	            <h6 th:text="${card.cardId}"></h6></div>
+	        <div class="col">
+	            <h6 th:text="${card.cardNumber}"></h6></div>
+	        <div class="col">
+	            <h6 th:text="${card.userId}"></h6></div>
+	    </div>
+	    </div>
+	</div>
 <!--
 <h2>Devices:</h2>
 <table class="tg">
@@ -64,6 +81,11 @@
 {{/amList}}
 </table>
 -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
 
 </body>
 
