@@ -20,9 +20,6 @@ import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
 public class IndexController {
     
     @Autowired
-    private AccessMessageRepository accessMessageRepository;
-    
-    @Autowired
     private CardRepository cardRepository;
     
     @Autowired
