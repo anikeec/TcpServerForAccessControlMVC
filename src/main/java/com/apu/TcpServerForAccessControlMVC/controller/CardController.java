@@ -38,7 +38,7 @@ public class CardController {
     }
     
     @RequestMapping(value="/card/add", method = RequestMethod.GET)
-    public ModelAndView registration(){
+    public ModelAndView add(){
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
@@ -49,7 +49,7 @@ public class CardController {
     }
     
     @RequestMapping(value = "/card/add", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid Card card, BindingResult bindingResult) {
+    public ModelAndView createNewCard(@Valid Card card, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         List<Card> cardList = cardRepository.findByCardNumber(card.getCardNumber());
         if ((cardList != null)&&(cardList.size() > 0)) {
@@ -69,4 +69,79 @@ public class CardController {
         }
         return modelAndView;
     }
+    
+    @RequestMapping(value="/card/activate", method = RequestMethod.GET)
+    public ModelAndView activateCard(){
+        ModelAndView modelAndView = new ModelAndView();
+        Card card = new Card();
+        modelAndView.addObject("card", card);
+        List<Card> cardList = cardRepository.findByActive(false);
+        modelAndView.addObject("cardList", cardList);
+        modelAndView.setViewName("card/activate");        
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/card/activate", method = RequestMethod.POST)
+    public ModelAndView activateCard(@Valid Card card, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();        
+        List<Card> cardList = cardRepository.findByCardId(card.getCardId());
+        if((cardList == null) || (cardList.size() == 0)) {
+            bindingResult
+                .rejectValue("cardId", "error.cardId",
+                        "This card id has't registered in the system yet");
+        } else {
+            card = cardList.get(0);
+            card.setActive(true);
+            cardRepository.save(card);
+        }            
+        
+        cardList = cardRepository.findByActive(false);
+        modelAndView.addObject("cardList", cardList);
+        if (bindingResult.hasErrors()) {            
+            modelAndView.setViewName("card/activate");
+        } else {            
+            modelAndView.addObject("successMessage", "Card has been activated successfully");
+            modelAndView.addObject("card", new Card());
+            modelAndView.setViewName("card/activate");
+        }
+        return modelAndView;
+    }
+    
+    @RequestMapping(value="/card/inactivate", method = RequestMethod.GET)
+    public ModelAndView inactivateCard(){
+        ModelAndView modelAndView = new ModelAndView();
+        Card card = new Card();
+        modelAndView.addObject("card", card);
+        List<Card> cardList = cardRepository.findByActive(true);
+        modelAndView.addObject("cardList", cardList);
+        modelAndView.setViewName("card/inactivate");        
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/card/inactivate", method = RequestMethod.POST)
+    public ModelAndView inactivateCard(@Valid Card card, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();        
+        List<Card> cardList = cardRepository.findByCardId(card.getCardId());
+        if((cardList == null) || (cardList.size() == 0)) {
+            bindingResult
+                .rejectValue("cardId", "error.cardId",
+                        "This card id has't registered in the system yet");
+        } else {
+            card = cardList.get(0);
+            card.setActive(false);
+            cardRepository.save(card);
+        }            
+        
+        cardList = cardRepository.findByActive(true);
+        modelAndView.addObject("cardList", cardList);
+        if (bindingResult.hasErrors()) {            
+            modelAndView.setViewName("card/inactivate");
+        } else {            
+            modelAndView.addObject("successMessage", "Card has been inactivated successfully");
+            modelAndView.addObject("card", new Card());
+            modelAndView.setViewName("card/inactivate");
+        }
+        return modelAndView;
+    }
+    
 }
