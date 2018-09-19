@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+      
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    
+    <title>Access control</title>
+</head>
+      
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	    <a class="navbar-brand" href="#">Access control</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	
+	    <div class="collapse navbar-collapse" id="navbar1">
+	        <ul class="navbar-nav mr-auto">
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</a>
+	                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+	                    <a class="dropdown-item" href="view">View</a>
+                        <a class="dropdown-item" href="add">Add</a>
+                        <a class="dropdown-item" href="activate">Activate</a>
+                        <a class="dropdown-item" href="deactivate">Inactivate</a>
+	                    <div class="dropdown-divider"></div>
+	                    <a class="dropdown-item" href="#">Other</a>
+	                </div>
+	            </li>
+	            <li class="nav-item active">
+	                <a class="nav-link" href="#">Cards<span class="sr-only">(current)</span></a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="users">Users</a>
+	            </li>            
+	        </ul>
+	        <form class="form-inline my-2 my-lg-0">
+	            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+	        </form>
+	        <div class="font-weight-bold text-info px-3">
+	            User:
+	            <div th:text="${name}"></div>
+	        </div>
+	    </div>
+	</nav>
+
+	<div class="container">
+		<div class="row" style="height: 50px;">
+		   <div class="text-primary col-sm-9" >
+               <h2>
+                   <span class="align-middle" style="margin-left:5px;">Cards</span>
+               </h2>
+           </div>
+		</div>
+		
+		<table class="table table-striped table-sm table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">id</th>
+		      <th scope="col">number</th>
+		      <th scope="col">user</th>
+		      <th scope="col">active</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="card : ${cardList}">
+		      <td th:text="${card.cardId}"></td>
+		      <td th:text="${card.cardNumber}"></td>
+		      <td th:text="${card.getUserId().getFirstName()} + ' ' + ${card.getUserId().getSecondName()}"></td>
+		      <td th:text="${card.active}"></td>
+		    </tr>
+		  </tbody>
+		</table>
+
+<!-- 		<div class="row bg-primary rounded mb-1" id="header"> -->
+<!-- 	       <div class="col-2 text-light"><h5><span class="align-middle">id</span></h5></div> -->
+<!-- 	       <div class="col text-light"><h5><span class="align-middle">number</span></h5></div> -->
+<!-- 	       <div class="col text-light"><h5><span class="align-middle">user</span></h5></div> -->
+<!-- 	       <div class="col text-light"><h5><span class="align-middle">active</span></h5></div> -->
+<!-- 	    </div> -->
+<!-- 	    <div id="table"> -->
+<!-- 		    <div class="row  rounded mb-1" th:each="card : ${cardList}"> -->
+<!-- 		        <div class="col-2"> -->
+<!-- 		           <h6> -->
+<!-- 		               <span class="align-middle" th:text="${card.cardId}"></span> -->
+<!-- 		           </h6> -->
+<!-- 		        </div> -->
+<!-- 		        <div class="col"> -->
+<!-- 		           <h6> -->
+<!-- 	                   <span class="align-middle" th:text="${card.cardNumber}"></span> -->
+<!-- 	               </h6> -->
+<!-- 	            </div> -->
+<!-- 		        <div class="col"> -->
+<!-- 		           <h6> -->
+<!-- 	                   <span class="align-middle" th:text="${card.getUserId().getFirstName()} + ' ' + ${card.getUserId().getSecondName()}"></span> -->
+<!-- 	               </h6> -->
+<!-- 		        </div> -->
+<!-- 		        <div class="col"> -->
+<!--                    <h6> -->
+<!--                        <span class="align-middle" th:text="${card.active}"></span> -->
+<!--                    </h6> -->
+<!--                 </div> -->
+<!-- 		    </div> -->
+<!-- 	    </div> --> 
+	</div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>

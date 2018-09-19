@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    
+    <title>Access control</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	    <a class="navbar-brand" href="">Access control</a>
+<!-- 	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation"> -->
+<!-- 	        <span class="navbar-toggler-icon"></span> -->
+<!-- 	    </button> -->
+	
+	    <div class="collapse navbar-collapse" id="navbar1">
+	        <ul class="navbar-nav mr-auto">
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</a>
+	                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+	                    <a class="dropdown-item" href="view">View</a>
+	                    <a class="dropdown-item" href="add">Add</a>
+	                    <a class="dropdown-item" href="activate">Activate</a>
+	                    <a class="dropdown-item" href="deactivate">Inactivate</a>
+	                    <div class="dropdown-divider"></div>
+	                    <a class="dropdown-item" href="#">Other</a>
+	                </div>
+	            </li>
+	            <li class="nav-item active">
+	                <a class="nav-link" href="view">Cards<span class="sr-only"></span></a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="users">Users</a>
+	            </li>            
+	        </ul>
+	        <form class="form-inline my-2 my-lg-0">
+	            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+	        </form>
+	        <div class="font-weight-bold text-info px-3">
+	            User:
+	            <div th:text="${name}"></div>
+	        </div>
+	    </div>
+	</nav>	
+	
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/card/add}" th:object="${card}" method="post" class="form-horizontal" role="form">
+					<div class="text-primary col-sm-9">
+						<h2>
+						   <span class="align-middle" style="margin-left:5px;">Adding card</span>
+						</h2>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+						    <label class="text-secondary" style="margin-left:5px;">Number</label>
+							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" class="validation-message"></label>
+							<input type="text" th:field="*{cardNumber}" placeholder="Card number" class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+						    <label class="text-secondary" style="margin-left:5px;">User id</label>
+						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="validation-message"></label>
+							<select class="form-control" id="exampleFormControlSelect1" th:field="*{userId}">
+								<option th:each="user : ${userList}" th:value="${user.userId}" th:text="${user.userId}"></option>
+							</select>							
+						</div>
+					</div>
+					<div class="form-group">
+                        <div class="col-sm-9">
+                            <label class="text-secondary" style="margin-left:5px;">Active</label>
+                            <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('active')}" th:errors="*{active}" class="validation-message"></label>
+                            <select class="form-control" id="exampleFormControlSelect1" th:field="*{active}">
+                                <option value="false">inactive</option>
+                                <option value="true">active</option>
+                            </select>                           
+                        </div>
+                    </div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Add</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+
+</body>
+</html>
