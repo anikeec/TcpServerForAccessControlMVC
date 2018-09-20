@@ -1,5 +1,6 @@
 package com.apu.TcpServerForAccessControlMVC.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,27 +30,32 @@ public class CardController {
     private UserRepository userRepository;
     
     @GetMapping("/card/view")
-    public ModelAndView index() {
+    public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        model.put("name", "Friend");
         List<Card> cardList = cardRepository.findAll();
         model.put("cardList", cardList);
+        if(principal != null) {
+            model.put("name", principal.getName());
+        }
         return new ModelAndView("card/view", model);
     }
     
     @RequestMapping(value="/card/add", method = RequestMethod.GET)
-    public ModelAndView add(){
+    public ModelAndView add(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
         List<User> userList = userRepository.findAll();
         modelAndView.addObject("userList", userList);
+        if(principal != null) {
+            modelAndView.addObject("name", principal.getName());
+        }
         modelAndView.setViewName("card/add");        
         return modelAndView;
     }
     
     @RequestMapping(value = "/card/add", method = RequestMethod.POST)
-    public ModelAndView createNewCard(@Valid Card card, BindingResult bindingResult) {
+    public ModelAndView createNewCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         List<Card> cardList = cardRepository.findByCardNumber(card.getCardNumber());
         if ((cardList != null)&&(cardList.size() > 0)) {
@@ -67,22 +73,28 @@ public class CardController {
             modelAndView.addObject("card", new Card());
             modelAndView.setViewName("card/add");
         }
+        if(principal != null) {
+            modelAndView.addObject("name", principal.getName());
+        }
         return modelAndView;
     }
     
     @RequestMapping(value="/card/activate", method = RequestMethod.GET)
-    public ModelAndView activateCard(){
+    public ModelAndView activateCard(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
         List<Card> cardList = cardRepository.findByActive(false);
         modelAndView.addObject("cardList", cardList);
-        modelAndView.setViewName("card/activate");        
+        modelAndView.setViewName("card/activate"); 
+        if(principal != null) {
+            modelAndView.addObject("name", principal.getName());
+        }
         return modelAndView;
     }
     
     @RequestMapping(value = "/card/activate", method = RequestMethod.POST)
-    public ModelAndView activateCard(@Valid Card card, BindingResult bindingResult) {
+    public ModelAndView activateCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
         List<Card> cardList = cardRepository.findByCardId(card.getCardId());
         if((cardList == null) || (cardList.size() == 0)) {
@@ -104,22 +116,28 @@ public class CardController {
             modelAndView.addObject("card", new Card());
             modelAndView.setViewName("card/activate");
         }
+        if(principal != null) {
+            modelAndView.addObject("name", principal.getName());
+        }
         return modelAndView;
     }
     
     @RequestMapping(value="/card/inactivate", method = RequestMethod.GET)
-    public ModelAndView inactivateCard(){
+    public ModelAndView inactivateCard(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
         List<Card> cardList = cardRepository.findByActive(true);
         modelAndView.addObject("cardList", cardList);
-        modelAndView.setViewName("card/inactivate");        
+        modelAndView.setViewName("card/inactivate");
+        if(principal != null) {
+            modelAndView.addObject("name", principal.getName());
+        }
         return modelAndView;
     }
     
     @RequestMapping(value = "/card/inactivate", method = RequestMethod.POST)
-    public ModelAndView inactivateCard(@Valid Card card, BindingResult bindingResult) {
+    public ModelAndView inactivateCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
         List<Card> cardList = cardRepository.findByCardId(card.getCardId());
         if((cardList == null) || (cardList.size() == 0)) {
@@ -140,6 +158,9 @@ public class CardController {
             modelAndView.addObject("successMessage", "Card has been inactivated successfully");
             modelAndView.addObject("card", new Card());
             modelAndView.setViewName("card/inactivate");
+        }
+        if(principal != null) {
+            modelAndView.addObject("name", principal.getName());
         }
         return modelAndView;
     }
