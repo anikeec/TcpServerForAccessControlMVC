@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+    <div th:replace="/../pageheader :: pageheader"></div>  
+</head>
+
+<body>
+	<div th:replace="/../mainmenu :: mainmenu"></div>	
+	
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/rule/activate}" th:object="${rule}" method="post" class="form-horizontal" role="form">
+					<div class="text-primary col-sm-9">
+						<h2>
+						   <span class="align-middle" style="margin-left:5px;">Activate rule</span>
+						</h2>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+						    <label class="text-secondary" style="margin-left:5px;">Rule (card number - device number)</label>
+						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('ruleId')}" th:errors="*{ruleId}" class="validation-message"></label>
+							<select class="form-control" id="FormControlSelect" th:field="*{ruleId}">
+								<option th:each="ruleTemp : ${ruleList}" th:value="${ruleTemp.ruleId}" th:text="${ruleTemp.ruleId} + ' - ' + ${ruleTemp.getCardId().getCardNumber()} + ' - ' + ${ruleTemp.getDeviceId().getDeviceNumber()}"></option>
+							</select>							
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Activate</button>
+						</div>
+					</div>
+					<div align="center" th:if="${param.error}">
+		                <p style="font-size: 20; color: #FF1C19;">Something wrong, please check</p>
+		            </div>
+					<span th:utext="${successMessage}"></span>				
+				</form>
+			</div>
+		</div>
+	</div>
+
+    <div th:replace="/../pagescriptsjs :: pagescriptsjs"></div>
+
+</body>
+</html>
