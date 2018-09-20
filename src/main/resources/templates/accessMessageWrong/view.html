@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+      
+<head>
+    <div th:replace="/../pageheader :: pageheader"></div>
+</head>
+      
+<body>
+    <div th:replace="/../mainmenu :: mainmenu"></div>
+
+	<div class="container">
+		<div class="row" style="height: 50px;">
+		   <div class="text-primary col-sm-9" >
+               <h2>
+                   <span class="align-middle" style="margin-left:5px;">AccessMessageWrong</span>
+               </h2>
+           </div>
+		</div>
+		
+		<table class="table table-striped table-sm table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">id</th>
+		      <th scope="col">card number</th>
+		      <th scope="col">device number</th>
+			  <th scope="col">event</th>
+		      <th scope="col">description</th>
+			  <th scope="col">date</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="accessMessage : ${accessMessageWrongList}">
+		      <td th:text="${accessMessage.accessMessId}"></td>
+		      <td th:text="${accessMessage.cardNumber}"></td>
+			  <td th:text="${accessMessage.deviceNumber}"></td>
+			  <td th:text="${accessMessage.eventId}"></td>
+		      <td th:text="${accessMessage.description}"></td>
+			  <td th:text="${accessMessage.date}"></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+
+    <div th:replace="/../pagescriptsjs :: pagescriptsjs"></div>
+
+</body>
+
+</html>
