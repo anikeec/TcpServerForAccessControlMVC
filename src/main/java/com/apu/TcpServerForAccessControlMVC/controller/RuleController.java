@@ -1,9 +1,6 @@
 package com.apu.TcpServerForAccessControlMVC.controller;
 
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
@@ -25,13 +21,11 @@ import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.entity.EventType;
 import com.apu.TcpServerForAccessControlDB.entity.Rule;
 import com.apu.TcpServerForAccessControlDB.entity.RuleType;
-import com.apu.TcpServerForAccessControlDB.entity.User;
 import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
 import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
 import com.apu.TcpServerForAccessControlDB.repository.EventTypeRepository;
 import com.apu.TcpServerForAccessControlDB.repository.RuleRepository;
 import com.apu.TcpServerForAccessControlDB.repository.RuleTypeRepository;
-import com.apu.TcpServerForAccessControlDB.repository.UserRepository;
 
 @Controller
 public class RuleController {
