@@ -16,8 +16,7 @@ import com.apu.TcpServerForAccessControlMVC.redis.RedisMessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessageSubscriber;
 
 @Configuration
-@ComponentScan("com.apu.TcpServerForAccessControlDB")
-@ComponentScan("com.apu.TcpServerForAccessControlMVC")
+@ComponentScan({"com.apu.TcpServerForAccessControlDB","com.apu.TcpServerForAccessControlMVC"})
 @EnableRedisRepositories(basePackages= {"com.apu.TcpServerForAccessControlDB.repository"})
 public class AppConfig {
 
