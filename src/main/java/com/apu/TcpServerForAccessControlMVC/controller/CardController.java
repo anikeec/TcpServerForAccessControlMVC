@@ -33,6 +33,9 @@ public class CardController {
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
         List<Card> cardList = cardRepository.findAll();
+        for(Card card:cardList) {
+            card.setUserId(userRepository.findByUserId(card.getUserId().getUserId()).get(0));
+        }
         model.put("cardList", cardList);
         if(principal != null) {
             model.put("name", principal.getName());
