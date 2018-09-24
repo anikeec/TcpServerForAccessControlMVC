@@ -10,7 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.apu.TcpServerForAccessControlDB.entity.User;
+import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
 
 //@Component
@@ -28,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
         
-        User user = userService.findUserByEmail(email);
+        SystemUser user = userService.findUserByEmail(email);
         if(user != null) {
             String passwordHash = user.getPassword();
             if(passwordEncoder.matches(password, passwordHash)) { 

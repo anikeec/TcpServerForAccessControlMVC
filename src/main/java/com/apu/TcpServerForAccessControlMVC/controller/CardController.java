@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
-import com.apu.TcpServerForAccessControlDB.entity.User;
+import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
-import com.apu.TcpServerForAccessControlDB.repository.UserRepository;
+import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 
 @Controller
 public class CardController {
@@ -27,7 +27,7 @@ public class CardController {
     private CardRepository cardRepository;
     
     @Autowired
-    private UserRepository userRepository;
+    private SystemUserRepository userRepository;
     
     @GetMapping("/card/view")
     public ModelAndView index(Principal principal) {
@@ -48,7 +48,7 @@ public class CardController {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
-        List<User> userList = userRepository.findAll();
+        List<SystemUser> userList = userRepository.findAll();
         modelAndView.addObject("userList", userList);
         if(principal != null) {
             modelAndView.addObject("name", principal.getName());
@@ -66,7 +66,7 @@ public class CardController {
                     .rejectValue("cardNumber", "error.cardNumber",
                             "This card number is already registered in the system");
         }
-        List<User> userList = userRepository.findAll();
+        List<SystemUser> userList = userRepository.findAll();
         modelAndView.addObject("userList", userList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("card/add");
