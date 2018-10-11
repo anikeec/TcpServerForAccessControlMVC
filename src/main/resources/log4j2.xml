@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	I would recommend using the log4j-1.2 adapter that is included in the log4j2 distribution. 
+	That way, any libraries coded to the log4j-1.2 API will work with log4j2 without any code changes.
+	Your classpath should include:
+	log4j-api-2.6.1.jar
+	log4j-core-2.6.1.jar
+	log4j-1.2-api-2.6.1.jar
+	log4j2.xml
+	link: https://stackoverflow.com/questions/22321109/configuring-log4j2-and-log4j-using-a-single-log4j2-xml-file
+ -->
+<Configuration status="ALL">
+    <Properties>
+        <Property name="MainLogfilename">app.log</Property>
+        <Property name="Sysoutlogfilename">sysout.log</Property>
+        <Property name="FlexyPoolLogFilename">flexypool.log</Property>
+        <Property name="HibernateLogFilename">hibernate.log</Property>
+        <Property name="SpringIntegrationlogfilename">spIntegration.log</Property>
+    </Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5p [%c] - %m%n" />
+		</Console>
+
+        <!-- Logging for Flexy-pool -->
+        <File name="FlexyPoolFile" fileName="${FlexyPoolLogFilename}" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
+        </File>
+        <Async name="FlexyPoolAsync" class="org.apache.log4j.RollingFileAppender">            
+            <AppenderRef ref="FlexyPoolFile"/>
+        </Async>
+        
+        <!-- Logging for Hibernate -->
+        <File name="HibernateFile" fileName="${HibernateLogFilename}" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
+        </File>
+        <Async name="HibernateAsync" class="org.apache.log4j.RollingFileAppender">            
+            <AppenderRef ref="HibernateFile"/>
+        </Async>
+        
+        <!-- Logging for System out -->
+        <File name="SysoutFileLogger" fileName="${Sysoutlogfilename}" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
+        </File>
+        <Async name="SysoutAsync">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="SysoutFileLogger"/>
+        </Async>
+        
+        <!-- Logging for Spring Integration -->
+        <File name="SpringIntegrationLogger" fileName="${SpringIntegrationlogfilename}" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
+        </File>
+        <Async name="SpringIntegrationAsync">
+            <AppenderRef ref="SpringIntegrationLogger"/>
+        </Async>
+        
+        <!-- Logging for other application information -->
+        <File name="MainLogger" fileName="${MainLogfilename}" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5p [%c] - %m%n" />
+        </File>
+        <Async name="MainLogAsync">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MainLogger"/>
+        </Async>
+        
+	</Appenders>
+	<Loggers>
+	   <!-- Logging for Flexy-pool -->
+	   <logger name="com.vladmihalcea.flexypool.metric.dropwizard.DropwizardMetrics" level="ALL" additivity="false">
+	       <AppenderRef ref="FlexyPoolAsync"/>
+	   </logger>
+	   
+	   <!-- Logging for Hibernate -->
+       <logger name="org.hibernate" level="ALL" additivity="false">
+           <AppenderRef ref="HibernateAsync"/>
+       </logger>
+		    
+	   <!-- Logging for System out -->	    
+       <Logger name="sysoutLog" level="ALL" additivity="false">
+           <AppenderRef ref="SysoutAsync" />
+       </Logger>
+       
+       <!-- Logging for Spring Integration -->      
+       <Logger name="org.springframework.integration" level="ALL" additivity="false">
+           <AppenderRef ref="SpringIntegrationAsync" />
+       </Logger>        
+
+       <!-- Logging for other application information -->
+       <Root level="all">
+           <AppenderRef ref="MainLogAsync" />
+       </Root>
+	</Loggers>
+</Configuration>
