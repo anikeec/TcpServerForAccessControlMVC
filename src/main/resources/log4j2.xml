@@ -13,7 +13,7 @@
     <Properties>
         <Property name="MainLogfilename">app.log</Property>
         <Property name="Sysoutlogfilename">sysout.log</Property>
-        <Property name="FlexyPoolLogFilename">flexypool.log</Property>
+        <Property name="ThymeleafLogFilename">thymeleaf.log</Property>
         <Property name="HibernateLogFilename">hibernate.log</Property>
         <Property name="SpringIntegrationlogfilename">spIntegration.log</Property>
     </Properties>
@@ -22,12 +22,12 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5p [%c] - %m%n" />
 		</Console>
 
-        <!-- Logging for Flexy-pool -->
-        <File name="FlexyPoolFile" fileName="${FlexyPoolLogFilename}" immediateFlush="true">
+        <!-- Logging for Thymeleaf -->
+        <File name="ThymeleafFile" fileName="${ThymeleafLogFilename}" immediateFlush="true">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
         </File>
-        <Async name="FlexyPoolAsync" class="org.apache.log4j.RollingFileAppender">            
-            <AppenderRef ref="FlexyPoolFile"/>
+        <Async name="ThymeleafAsync" class="org.apache.log4j.RollingFileAppender">            
+            <AppenderRef ref="ThymeleafFile"/>
         </Async>
         
         <!-- Logging for Hibernate -->
@@ -66,9 +66,9 @@
         
 	</Appenders>
 	<Loggers>
-	   <!-- Logging for Flexy-pool -->
-	   <logger name="com.vladmihalcea.flexypool.metric.dropwizard.DropwizardMetrics" level="ALL" additivity="false">
-	       <AppenderRef ref="FlexyPoolAsync"/>
+	   <!-- Logging for Thymeleaf -->
+	   <logger name="org.thymeleaf" level="ALL" additivity="false">
+	       <AppenderRef ref="ThymeleafAsync"/>
 	   </logger>
 	   
 	   <!-- Logging for Hibernate -->
