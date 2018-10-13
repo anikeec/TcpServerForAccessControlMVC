@@ -1,0 +1,3 @@
+SELECT * FROM (SELECT * FROM access_message AS am JOIN device d ON am.device_id=d.device_id JOIN card c ON am.card_id=c.card_id  WHERE am.access_mess_id > 0 ORDER BY am.access_mess_id LIMIT 10 OFFSET 1 * 10) a;
+
+SELECT * FROM access_message AS am JOIN device d ON am.device_id=d.device_id JOIN card c ON am.card_id=c.card_id  WHERE am.access_mess_id > 0 ORDER BY am.access_mess_id LIMIT 10 OFFSET 1 * 10;
