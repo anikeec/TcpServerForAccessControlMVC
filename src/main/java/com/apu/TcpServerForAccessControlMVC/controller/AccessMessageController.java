@@ -34,26 +34,25 @@ public class AccessMessageController {
     
     @GetMapping("/accessMessage/view")
     public ModelAndView index(Principal principal,
-            @RequestParam(value = "page.page", required = false) Integer page,
-            @RequestParam(value = "page.size", required = false) Integer pageSize) {
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer pageSize) {
         Map<String, Object> model = new HashMap<>();
-        Page<AccessMessage> accessMessagePage = null;
         Pageable pageable = null;
         if((page!=null)&&(pageSize!=null)) {
             pageable = PageRequest.of(page-1, pageSize);
         } else {
             pageable = PageRequest.of(0, PAGE_SIZE);
-        }
-        accessMessagePage = accessMessageRepository.findAll(pageable);
-        model.put("accessMessageList", accessMessagePage);
+        }        
+
         if(principal != null) {
             model.put("name", principal.getName());
         }
         
+        Page<AccessMessage> accessMessagePage = accessMessageRepository.findAll(pageable);
         PageWrapper<AccessMessage> pageWrapper = new PageWrapper<>(accessMessagePage, "");
+        model.put("page", pageWrapper);
 
-        return new ModelAndView("accessMessage/view", model)
-                .addObject("page", pageWrapper);
+        return new ModelAndView("accessMessage/view", model);
     }
     
 //    @GetMapping("/accessMessage/view")
