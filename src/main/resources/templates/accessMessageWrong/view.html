@@ -2,14 +2,15 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
       
-<head>
-    <div th:replace="/../pageheader :: pageheader"></div>
-</head>
+<head th:include="/../pageheader :: pageheader"></head>
       
 <body>
+    <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+    
     <div th:replace="/../mainmenu :: mainmenu"></div>
 
-	<div class="container">
+    <div>
 		<div class="row" style="height: 50px;">
 		   <div class="text-primary col-sm-9" >
                <h2>
@@ -43,7 +44,8 @@
 	</div>
 
     <div th:replace="/../pagescriptsjs :: pagescriptsjs"></div>
-
+    </div>
+    </div>
 </body>
 
 </html>
