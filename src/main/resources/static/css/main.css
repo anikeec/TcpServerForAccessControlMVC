@@ -13,3 +13,6 @@
 #table .row:nth-child(even) {
     background: #58B7DB;
 }
+.table-sm {
+    width: 1000px;
+}
