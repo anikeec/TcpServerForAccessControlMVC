@@ -19,12 +19,13 @@ import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
 import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
+import com.apu.TcpServerForAccessControlMVC.service.CardService;
 
 @Controller
 public class CardController {
     
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
     
     @Autowired
     private SystemUserRepository userRepository;
@@ -32,7 +33,7 @@ public class CardController {
     @GetMapping("/card/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<Card> cardList = cardRepository.findAll();
+        List<Card> cardList = cardService.findAll();
 //        for(Card card:cardList) {
 //            card.setUserId(userRepository.findByUserId(card.getUserId().getUserId()).get(0));
 //        }
@@ -60,7 +61,7 @@ public class CardController {
     @RequestMapping(value = "/card/add", method = RequestMethod.POST)
     public ModelAndView createNewCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        List<Card> cardList = cardRepository.findByCardNumber(card.getCardNumber());
+        List<Card> cardList = cardService.findByCardNumber(card.getCardNumber());
         if ((cardList != null)&&(cardList.size() > 0)) {
             bindingResult
                     .rejectValue("cardNumber", "error.cardNumber",
@@ -71,7 +72,7 @@ public class CardController {
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("card/add");
         } else {
-            cardRepository.save(card);
+            cardService.save(card);
             modelAndView.addObject("successMessage", "Card has been added successfully");
             modelAndView.addObject("card", new Card());
             modelAndView.setViewName("card/add");
@@ -87,7 +88,7 @@ public class CardController {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
-        List<Card> cardList = cardRepository.findByActive(false);
+        List<Card> cardList = cardService.findByActive(false);
         modelAndView.addObject("cardList", cardList);
         modelAndView.setViewName("card/activate"); 
         if(principal != null) {
@@ -99,7 +100,7 @@ public class CardController {
     @RequestMapping(value = "/card/activate", method = RequestMethod.POST)
     public ModelAndView activateCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<Card> cardList = cardRepository.findByCardId(card.getCardId());
+        List<Card> cardList = cardService.findByCardId(card.getCardId());
         if((cardList == null) || (cardList.size() == 0)) {
             bindingResult
                 .rejectValue("cardId", "error.cardId",
@@ -107,10 +108,10 @@ public class CardController {
         } else {
             card = cardList.get(0);
             card.setActive(true);
-            cardRepository.save(card);
+            cardService.save(card);
         }            
         
-        cardList = cardRepository.findByActive(false);
+        cardList = cardService.findByActive(false);
         modelAndView.addObject("cardList", cardList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("card/activate");
@@ -130,7 +131,7 @@ public class CardController {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
-        List<Card> cardList = cardRepository.findByActive(true);
+        List<Card> cardList = cardService.findByActive(true);
         modelAndView.addObject("cardList", cardList);
         modelAndView.setViewName("card/inactivate");
         if(principal != null) {
@@ -142,7 +143,7 @@ public class CardController {
     @RequestMapping(value = "/card/inactivate", method = RequestMethod.POST)
     public ModelAndView inactivateCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<Card> cardList = cardRepository.findByCardId(card.getCardId());
+        List<Card> cardList = cardService.findByCardId(card.getCardId());
         if((cardList == null) || (cardList.size() == 0)) {
             bindingResult
                 .rejectValue("cardId", "error.cardId",
@@ -150,10 +151,10 @@ public class CardController {
         } else {
             card = cardList.get(0);
             card.setActive(false);
-            cardRepository.save(card);
+            cardService.save(card);
         }            
         
-        cardList = cardRepository.findByActive(true);
+        cardList = cardService.findByActive(true);
         modelAndView.addObject("cardList", cardList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("card/inactivate");
