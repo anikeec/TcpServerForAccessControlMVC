@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.AccessMessage;
-import com.apu.TcpServerForAccessControlDB.repository.AccessMessageRepository;
 import com.apu.TcpServerForAccessControlMVC.PageWrapper;
+import com.apu.TcpServerForAccessControlMVC.service.AccessMessageService;
 
 @Controller
 public class AccessMessageController {
     
     @Autowired
-    private AccessMessageRepository accessMessageRepository;
+    private AccessMessageService accessMessageService;
     
     private static int PAGE_SIZE = 10;
     
@@ -48,7 +48,7 @@ public class AccessMessageController {
             model.put("name", principal.getName());
         }
         
-        Page<AccessMessage> accessMessagePage = accessMessageRepository.findAll(pageable);
+        Page<AccessMessage> accessMessagePage = accessMessageService.findAll(pageable);
         PageWrapper<AccessMessage> pageWrapper = new PageWrapper<>(accessMessagePage, "");
         model.put("page", pageWrapper);
 
@@ -62,10 +62,10 @@ public class AccessMessageController {
 //        List<Integer> pageList = new ArrayList<>();
 //        pageList.add(5);
 //        if(page == null) {
-//            accessMessageList = accessMessageRepository.findAll();
+//            accessMessageList = accessMessageService.findAll();
 //        } else {
-////            accessMessageList = accessMessageRepository.findAllByPage(page);
-//            accessMessageList = accessMessageRepository.findAll();
+////            accessMessageList = accessMessageService.findAllByPage(page);
+//            accessMessageList = accessMessageService.findAll();
 //            int size = accessMessageList.size();
 //            List<AccessMessage> retList = new ArrayList<>();
 //            int start = page*PAGE_SIZE;

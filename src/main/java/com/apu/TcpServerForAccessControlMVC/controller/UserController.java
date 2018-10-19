@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
-import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
+import com.apu.TcpServerForAccessControlMVC.service.UserService;
 
 @Controller
 public class UserController {
     
     @Autowired
-    private SystemUserRepository userRepository;
+    private UserService userService;
     
     @GetMapping("/user/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<SystemUser> userList = userRepository.findAll();
+        List<SystemUser> userList = userService.findAll();
         model.put("userList", userList);
         if(principal != null) {
             model.put("name", principal.getName());
@@ -40,7 +40,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         SystemUser user = new SystemUser();
         modelAndView.addObject("user", user);
-        List<SystemUser> userList = userRepository.findAll();
+        List<SystemUser> userList = userService.findAll();
         modelAndView.addObject("userList", userList);
         if(principal != null) {
             modelAndView.addObject("name", principal.getName());
@@ -52,7 +52,7 @@ public class UserController {
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid SystemUser user, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        List<SystemUser> userList = userRepository.findByEmail(user.getEmail());
+        List<SystemUser> userList = userService.findByEmail(user.getEmail());
         if ((userList != null)&&(userList.size() > 0)) {
             bindingResult
                     .rejectValue("email", "error.email",
@@ -61,7 +61,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("user/add");
         } else {
-            userRepository.save(user);
+            userService.save(user);
             modelAndView.addObject("successMessage", "User has been added successfully");
             modelAndView.addObject("user", new SystemUser());
             modelAndView.setViewName("user/add");
@@ -77,7 +77,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         SystemUser user = new SystemUser();
         modelAndView.addObject("user", user);
-        List<SystemUser> userList = userRepository.findByActive(false);
+        List<SystemUser> userList = userService.findByActive(false);
         modelAndView.addObject("userList", userList);
         modelAndView.setViewName("user/activate"); 
         if(principal != null) {
@@ -89,7 +89,7 @@ public class UserController {
     @RequestMapping(value = "/user/activate", method = RequestMethod.POST)
     public ModelAndView activateUser(@Valid SystemUser user, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<SystemUser> userList = userRepository.findByUserId(user.getUserId());
+        List<SystemUser> userList = userService.findByUserId(user.getUserId());
         if((userList == null) || (userList.size() == 0)) {
             bindingResult
                 .rejectValue("userId", "error.userId",
@@ -97,10 +97,10 @@ public class UserController {
         } else {
             user = userList.get(0);
             user.setActive(true);
-            userRepository.save(user);
+            userService.save(user);
         }            
         
-        userList = userRepository.findByActive(false);
+        userList = userService.findByActive(false);
         modelAndView.addObject("userList", userList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("user/activate");
@@ -120,7 +120,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         SystemUser user = new SystemUser();
         modelAndView.addObject("user", user);
-        List<SystemUser> userList = userRepository.findByActive(true);
+        List<SystemUser> userList = userService.findByActive(true);
         modelAndView.addObject("userList", userList);
         modelAndView.setViewName("user/inactivate");
         if(principal != null) {
@@ -132,7 +132,7 @@ public class UserController {
     @RequestMapping(value = "/user/inactivate", method = RequestMethod.POST)
     public ModelAndView inactivateUser(@Valid SystemUser user, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<SystemUser> userList = userRepository.findByUserId(user.getUserId());
+        List<SystemUser> userList = userService.findByUserId(user.getUserId());
         if((userList == null) || (userList.size() == 0)) {
             bindingResult
                 .rejectValue("userId", "error.userId",
@@ -140,10 +140,10 @@ public class UserController {
         } else {
             user = userList.get(0);
             user.setActive(false);
-            userRepository.save(user);
+            userService.save(user);
         }            
         
-        userList = userRepository.findByActive(true);
+        userList = userService.findByActive(true);
         modelAndView.addObject("userList", userList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("user/inactivate");

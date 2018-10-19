@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.AccessMessageWrong;
-import com.apu.TcpServerForAccessControlDB.repository.AccessMessageWrongRepository;
+import com.apu.TcpServerForAccessControlMVC.service.AccessMessageWrongService;
 
 @Controller
 public class AccessMessageWrongController {
     
     @Autowired
-    private AccessMessageWrongRepository accessMessageWrongRepository;
+    private AccessMessageWrongService accessMessageWrongService;
     
     @GetMapping("/accessMessageWrong/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<AccessMessageWrong> accessMessageWrongList = accessMessageWrongRepository.findAll();
+        List<AccessMessageWrong> accessMessageWrongList = accessMessageWrongService.findAll();
         model.put("accessMessageWrongList", accessMessageWrongList);
         if(principal != null) {
             model.put("name", principal.getName());

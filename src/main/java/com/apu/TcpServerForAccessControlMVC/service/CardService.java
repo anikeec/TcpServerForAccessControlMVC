@@ -30,11 +30,11 @@ public class CardService {
         return cardRepository.findByActive(active);
     }
 
-    <S extends Card> S save(S entity) {
+    public <S extends Card> S save(S entity) {
         return cardRepository.save(entity);
     }
 
-    void delete(Card entity) {
+    public void delete(Card entity) {
         cardRepository.delete(entity);
     }
     

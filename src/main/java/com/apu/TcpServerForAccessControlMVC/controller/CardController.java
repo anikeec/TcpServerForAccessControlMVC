@@ -17,9 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
-import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
-import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
+import com.apu.TcpServerForAccessControlMVC.service.UserService;
 
 @Controller
 public class CardController {
@@ -28,14 +27,14 @@ public class CardController {
     private CardService cardService;
     
     @Autowired
-    private SystemUserRepository userRepository;
+    private UserService userService;
     
     @GetMapping("/card/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
         List<Card> cardList = cardService.findAll();
 //        for(Card card:cardList) {
-//            card.setUserId(userRepository.findByUserId(card.getUserId().getUserId()).get(0));
+//            card.setUserId(userService.findByUserId(card.getUserId().getUserId()).get(0));
 //        }
         model.put("cardList", cardList);
         if(principal != null) {
@@ -49,7 +48,7 @@ public class CardController {
         ModelAndView modelAndView = new ModelAndView();
         Card card = new Card();
         modelAndView.addObject("card", card);
-        List<SystemUser> userList = userRepository.findAll();
+        List<SystemUser> userList = userService.findAll();
         modelAndView.addObject("userList", userList);
         if(principal != null) {
             modelAndView.addObject("name", principal.getName());
@@ -67,7 +66,7 @@ public class CardController {
                     .rejectValue("cardNumber", "error.cardNumber",
                             "This card number is already registered in the system");
         }
-        List<SystemUser> userList = userRepository.findAll();
+        List<SystemUser> userList = userService.findAll();
         modelAndView.addObject("userList", userList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("card/add");

@@ -21,34 +21,34 @@ import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.entity.EventType;
 import com.apu.TcpServerForAccessControlDB.entity.Rule;
 import com.apu.TcpServerForAccessControlDB.entity.RuleType;
-import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
-import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
-import com.apu.TcpServerForAccessControlDB.repository.EventTypeRepository;
-import com.apu.TcpServerForAccessControlDB.repository.RuleRepository;
-import com.apu.TcpServerForAccessControlDB.repository.RuleTypeRepository;
+import com.apu.TcpServerForAccessControlMVC.service.CardService;
+import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
+import com.apu.TcpServerForAccessControlMVC.service.EventTypeService;
+import com.apu.TcpServerForAccessControlMVC.service.RuleService;
+import com.apu.TcpServerForAccessControlMVC.service.RuleTypeService;
 
 @Controller
 public class RuleController {
     
     @Autowired
-    private RuleRepository ruleRepository;
+    private RuleService ruleService;
     
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
     
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
     
     @Autowired
-    private EventTypeRepository eventTypeRepository;
+    private EventTypeService eventTypeService;
     
     @Autowired
-    private RuleTypeRepository ruleTypeRepository;
+    private RuleTypeService ruleTypeService;
     
     @GetMapping("/rule/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<Rule> ruleList = ruleRepository.findAll();
+        List<Rule> ruleList = ruleService.findAll();
         model.put("ruleList", ruleList);
         if(principal != null) {
             model.put("name", principal.getName());
@@ -61,13 +61,13 @@ public class RuleController {
         ModelAndView modelAndView = new ModelAndView();
         Rule rule = new Rule();
         modelAndView.addObject("rule", rule);
-        List<Card> cardList = cardRepository.findAll();
+        List<Card> cardList = cardService.findAll();
         modelAndView.addObject("cardList", cardList);
-        List<Device> deviceList = deviceRepository.findAll();
+        List<Device> deviceList = deviceService.findAll();
         modelAndView.addObject("deviceList", deviceList);
-        List<EventType> eventTypeList = eventTypeRepository.findAll();
+        List<EventType> eventTypeList = eventTypeService.findAll();
         modelAndView.addObject("eventTypeList", eventTypeList);
-        List<RuleType> ruleTypeList = ruleTypeRepository.findAll();
+        List<RuleType> ruleTypeList = ruleTypeService.findAll();
         modelAndView.addObject("ruleTypeList", ruleTypeList);
         if(principal != null) {
             modelAndView.addObject("name", principal.getName());
@@ -84,7 +84,7 @@ public class RuleController {
             ) {
         ModelAndView modelAndView = new ModelAndView();
         List<Rule> ruleList = 
-                              ruleRepository.findByDeviceIdCardIdEventTypeIdRuleTypeId(
+                              ruleService.findByDeviceIdCardIdEventTypeIdRuleTypeId(
                               rule.getDeviceId(),
                               rule.getCardId(),
                               rule.getEventId(),
@@ -94,18 +94,18 @@ public class RuleController {
                     .rejectValue("cardId", "error.cardId",
                             "Rule with this parameters is already registered in the system");
         }
-        List<Card> cardList = cardRepository.findAll();
+        List<Card> cardList = cardService.findAll();
         modelAndView.addObject("cardList", cardList);
-        List<Device> deviceList = deviceRepository.findAll();
+        List<Device> deviceList = deviceService.findAll();
         modelAndView.addObject("deviceList", deviceList);
-        List<EventType> eventTypeList = eventTypeRepository.findAll();
+        List<EventType> eventTypeList = eventTypeService.findAll();
         modelAndView.addObject("eventTypeList", eventTypeList);
-        List<RuleType> ruleTypeList = ruleTypeRepository.findAll();
+        List<RuleType> ruleTypeList = ruleTypeService.findAll();
         modelAndView.addObject("ruleTypeList", ruleTypeList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("rule/add");
         } else {
-            ruleRepository.save(rule);
+            ruleService.save(rule);
             modelAndView.addObject("successMessage", "Rule has been added successfully");
             modelAndView.addObject("rule", new Rule());
             modelAndView.setViewName("rule/add");
@@ -121,7 +121,7 @@ public class RuleController {
         ModelAndView modelAndView = new ModelAndView();
         Rule rule = new Rule();
         modelAndView.addObject("rule", rule);
-        List<Rule> ruleList = ruleRepository.findByActive(false);
+        List<Rule> ruleList = ruleService.findByActive(false);
         modelAndView.addObject("ruleList", ruleList);
         modelAndView.setViewName("rule/activate"); 
         if(principal != null) {
@@ -133,7 +133,7 @@ public class RuleController {
     @RequestMapping(value = "/rule/activate", method = RequestMethod.POST)
     public ModelAndView activateRule(@Valid Rule rule, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<Rule> ruleList = ruleRepository.findByRuleId(rule.getRuleId());
+        List<Rule> ruleList = ruleService.findByRuleId(rule.getRuleId());
         if((ruleList == null) || (ruleList.size() == 0)) {
             bindingResult
                 .rejectValue("ruleId", "error.ruleId",
@@ -141,10 +141,10 @@ public class RuleController {
         } else {
             rule = ruleList.get(0);
             rule.setActive(true);
-            ruleRepository.save(rule);
+            ruleService.save(rule);
         }            
         
-        ruleList = ruleRepository.findByActive(false);
+        ruleList = ruleService.findByActive(false);
         modelAndView.addObject("ruleList", ruleList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("rule/activate");
@@ -164,7 +164,7 @@ public class RuleController {
         ModelAndView modelAndView = new ModelAndView();
         Rule rule = new Rule();
         modelAndView.addObject("rule", rule);
-        List<Rule> ruleList = ruleRepository.findByActive(true);
+        List<Rule> ruleList = ruleService.findByActive(true);
         modelAndView.addObject("ruleList", ruleList);
         modelAndView.setViewName("rule/inactivate");
         if(principal != null) {
@@ -176,7 +176,7 @@ public class RuleController {
     @RequestMapping(value = "/rule/inactivate", method = RequestMethod.POST)
     public ModelAndView inactivateRule(@Valid Rule rule, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<Rule> ruleList = ruleRepository.findByRuleId(rule.getRuleId());
+        List<Rule> ruleList = ruleService.findByRuleId(rule.getRuleId());
         if((ruleList == null) || (ruleList.size() == 0)) {
             bindingResult
                 .rejectValue("ruleId", "error.ruleId",
@@ -184,10 +184,10 @@ public class RuleController {
         } else {
             rule = ruleList.get(0);
             rule.setActive(false);
-            ruleRepository.save(rule);
+            ruleService.save(rule);
         }            
         
-        ruleList = ruleRepository.findByActive(true);
+        ruleList = ruleService.findByActive(true);
         modelAndView.addObject("ruleList", ruleList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("rule/inactivate");

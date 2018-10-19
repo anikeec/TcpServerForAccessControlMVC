@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.RuleType;
-import com.apu.TcpServerForAccessControlDB.repository.RuleTypeRepository;
+import com.apu.TcpServerForAccessControlMVC.service.RuleTypeService;
 
 @Controller
 public class RuleTypeController {
     
     @Autowired
-    private RuleTypeRepository ruleTypeRepository;
+    private RuleTypeService ruleTypeService;
     
     @GetMapping("/ruleType/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<RuleType> ruleTypeList = ruleTypeRepository.findAll();
+        List<RuleType> ruleTypeList = ruleTypeService.findAll();
         model.put("ruleTypeList", ruleTypeList);
         if(principal != null) {
             model.put("name", principal.getName());
@@ -50,7 +50,7 @@ public class RuleTypeController {
     @RequestMapping(value = "/ruleType/add", method = RequestMethod.POST)
     public ModelAndView createNewRuleType(@Valid RuleType ruleType, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        List<RuleType> ruleTypeList = ruleTypeRepository.findByDescription(ruleType.getDescription());
+        List<RuleType> ruleTypeList = ruleTypeService.findByDescription(ruleType.getDescription());
         if ((ruleTypeList != null)&&(ruleTypeList.size() > 0)) {
             bindingResult
                     .rejectValue("description", "error.description",
@@ -59,7 +59,7 @@ public class RuleTypeController {
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("ruleType/add");
         } else {
-            ruleTypeRepository.save(ruleType);
+            ruleTypeService.save(ruleType);
             modelAndView.addObject("successMessage", "RuleType has been added successfully");
             modelAndView.addObject("ruleType", new RuleType());
             modelAndView.setViewName("ruleType/add");

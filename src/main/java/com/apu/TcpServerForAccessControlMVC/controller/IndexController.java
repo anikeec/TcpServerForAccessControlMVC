@@ -11,27 +11,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.Device;
-import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
-import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
+import com.apu.TcpServerForAccessControlMVC.service.CardService;
+import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
 
 @Controller
 public class IndexController {
     
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
     
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
     
     @GetMapping("/")
     public ModelAndView index() {
         Map<String, Object> model = new HashMap<>();
         model.put("name", "Friend");
-        List<Card> cardList = cardRepository.findAll();
+        List<Card> cardList = cardService.findAll();
         model.put("cardList", cardList);
-        List<Device> deviceList = deviceRepository.findAll();
+        List<Device> deviceList = deviceService.findAll();
         model.put("deviceList", deviceList);
-//        List<AccessMessage> amList = accessMessageRepository.findAll();
+//        List<AccessMessage> amList = accessMessageService.findAll();
 //        model.put("amList", amList);
         return new ModelAndView("index", model);
     }

@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Device;
-import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
+import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
 
 @Controller
 public class DeviceController {
     
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
     
     @GetMapping("/device/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<Device> deviceList = deviceRepository.findAll();
+        List<Device> deviceList = deviceService.findAll();
         model.put("deviceList", deviceList);
         if(principal != null) {
             model.put("name", principal.getName());
@@ -50,7 +50,7 @@ public class DeviceController {
     @RequestMapping(value = "/device/add", method = RequestMethod.POST)
     public ModelAndView createNewDevice(@Valid Device device, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        List<Device> deviceList = deviceRepository.findByDeviceNumber(device.getDeviceNumber());
+        List<Device> deviceList = deviceService.findByDeviceNumber(device.getDeviceNumber());
         if ((deviceList != null)&&(deviceList.size() > 0)) {
             bindingResult
                     .rejectValue("deviceNumber", "error.deviceNumber",
@@ -59,7 +59,7 @@ public class DeviceController {
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("device/add");
         } else {
-            deviceRepository.save(device);
+            deviceService.save(device);
             modelAndView.addObject("successMessage", "Device has been added successfully");
             modelAndView.addObject("device", new Device());
             modelAndView.setViewName("device/add");
@@ -75,7 +75,7 @@ public class DeviceController {
         ModelAndView modelAndView = new ModelAndView();
         Device device = new Device();
         modelAndView.addObject("device", device);
-        List<Device> deviceList = deviceRepository.findByActive(false);
+        List<Device> deviceList = deviceService.findByActive(false);
         modelAndView.addObject("deviceList", deviceList);
         modelAndView.setViewName("device/activate"); 
         if(principal != null) {
@@ -87,7 +87,7 @@ public class DeviceController {
     @RequestMapping(value = "/device/activate", method = RequestMethod.POST)
     public ModelAndView activateDevice(@Valid Device device, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<Device> deviceList = deviceRepository.findByDeviceId(device.getDeviceId());
+        List<Device> deviceList = deviceService.findByDeviceId(device.getDeviceId());
         if((deviceList == null) || (deviceList.size() == 0)) {
             bindingResult
                 .rejectValue("deviceId", "error.deviceId",
@@ -95,10 +95,10 @@ public class DeviceController {
         } else {
             device = deviceList.get(0);
             device.setActive(true);
-            deviceRepository.save(device);
+            deviceService.save(device);
         }            
         
-        deviceList = deviceRepository.findByActive(false);
+        deviceList = deviceService.findByActive(false);
         modelAndView.addObject("deviceList", deviceList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("device/activate");
@@ -118,7 +118,7 @@ public class DeviceController {
         ModelAndView modelAndView = new ModelAndView();
         Device device = new Device();
         modelAndView.addObject("device", device);
-        List<Device> deviceList = deviceRepository.findByActive(true);
+        List<Device> deviceList = deviceService.findByActive(true);
         modelAndView.addObject("deviceList", deviceList);
         modelAndView.setViewName("device/inactivate");
         if(principal != null) {
@@ -130,7 +130,7 @@ public class DeviceController {
     @RequestMapping(value = "/device/inactivate", method = RequestMethod.POST)
     public ModelAndView inactivateDevice(@Valid Device device, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<Device> deviceList = deviceRepository.findByDeviceId(device.getDeviceId());
+        List<Device> deviceList = deviceService.findByDeviceId(device.getDeviceId());
         if((deviceList == null) || (deviceList.size() == 0)) {
             bindingResult
                 .rejectValue("deviceId", "error.deviceId",
@@ -138,10 +138,10 @@ public class DeviceController {
         } else {
             device = deviceList.get(0);
             device.setActive(false);
-            deviceRepository.save(device);
+            deviceService.save(device);
         }            
         
-        deviceList = deviceRepository.findByActive(true);
+        deviceList = deviceService.findByActive(true);
         modelAndView.addObject("deviceList", deviceList);
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("device/inactivate");

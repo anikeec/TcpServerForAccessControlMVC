@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.InfoMessage;
-import com.apu.TcpServerForAccessControlDB.repository.InfoMessageRepository;
+import com.apu.TcpServerForAccessControlMVC.service.InfoMessageService;
 
 @Controller
 public class InfoMessageController {
     
     @Autowired
-    private InfoMessageRepository infoMessageRepository;
+    private InfoMessageService infoMessageService;
     
     @GetMapping("/infoMessage/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<InfoMessage> infoMessageList = infoMessageRepository.findAll();
+        List<InfoMessage> infoMessageList = infoMessageService.findAll();
         model.put("infoMessageList", infoMessageList);
         if(principal != null) {
             model.put("name", principal.getName());

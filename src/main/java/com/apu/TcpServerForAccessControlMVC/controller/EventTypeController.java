@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.EventType;
-import com.apu.TcpServerForAccessControlDB.repository.EventTypeRepository;
+import com.apu.TcpServerForAccessControlMVC.service.EventTypeService;
 
 @Controller
 public class EventTypeController {
     
     @Autowired
-    private EventTypeRepository eventTypeRepository;
+    private EventTypeService eventTypeService;
     
     @GetMapping("/eventType/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<EventType> eventTypeList = eventTypeRepository.findAll();
+        List<EventType> eventTypeList = eventTypeService.findAll();
         model.put("eventTypeList", eventTypeList);
         if(principal != null) {
             model.put("name", principal.getName());
@@ -50,7 +50,7 @@ public class EventTypeController {
     @RequestMapping(value = "/eventType/add", method = RequestMethod.POST)
     public ModelAndView createNewEventType(@Valid EventType eventType, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        List<EventType> eventTypeList = eventTypeRepository.findByDescription(eventType.getDescription());
+        List<EventType> eventTypeList = eventTypeService.findByDescription(eventType.getDescription());
         if ((eventTypeList != null)&&(eventTypeList.size() > 0)) {
             bindingResult
                     .rejectValue("description", "error.description",
@@ -59,7 +59,7 @@ public class EventTypeController {
         if (bindingResult.hasErrors()) {            
             modelAndView.setViewName("eventType/add");
         } else {
-            eventTypeRepository.save(eventType);
+            eventTypeService.save(eventType);
             modelAndView.addObject("successMessage", "EventType has been added successfully");
             modelAndView.addObject("eventType", new EventType());
             modelAndView.setViewName("eventType/add");

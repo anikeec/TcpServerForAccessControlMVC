@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.EventMessage;
-import com.apu.TcpServerForAccessControlDB.repository.EventMessageRepository;
+import com.apu.TcpServerForAccessControlMVC.service.EventMessageService;
 
 @Controller
 public class EventMessageController {
     
     @Autowired
-    private EventMessageRepository eventMessageRepository;
+    private EventMessageService eventMessageService;
     
     @GetMapping("/eventMessage/view")
     public ModelAndView index(Principal principal) {
         Map<String, Object> model = new HashMap<>();
-        List<EventMessage> eventMessageList = eventMessageRepository.findAll();
+        List<EventMessage> eventMessageList = eventMessageService.findAll();
         model.put("eventMessageList", eventMessageList);
         if(principal != null) {
             model.put("name", principal.getName());
