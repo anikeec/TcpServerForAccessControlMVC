@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+      
+<head th:include="/../pageheader :: pageheader"></head>
+      
+<body>
+    <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+    
+    <div th:replace="/../mainmenu :: mainmenu"></div>
+
+    <div>
+	   <div class="row" style="height: 50px;">
+           <div class="text-primary col-sm-9" >
+               <h2>
+                   <span class="align-middle" style="margin-left:5px;">Error page</span>
+               </h2>
+           </div>
+        </div>
+		<div>
+	       If you see this page, something went by wrong way :(
+	    </div>
+	</div>
+
+    <div th:replace="pagescriptsjs :: pagescriptsjs"></div>
+    </div>
+    </div>
+</body>
+
+</html>
