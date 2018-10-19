@@ -10,48 +10,42 @@
     <div th:replace="/../mainmenu :: mainmenu"></div>
 
     <div>
-		<div class="row justify-content-md-center">
-			<div class="col-md-6 col-md-offset-3">
+        <div class="row" style="height: 50px;">
+           <div class="text-primary" >
+               <h2>
+                   <span class="align-middle" style="margin-left:5px;">Adding card</span>   
+               </h2>
+           </div>
+        </div>
+		<div class="row">
 				<form autocomplete="off" action="#" th:action="@{/card/add}" th:object="${card}" method="post" class="form-horizontal" role="form">
-					<div class="text-primary col-sm-9">
-						<h2>
-						   <span class="align-middle" style="margin-left:5px;">Adding card</span>
-						</h2>
-					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Number</label>
 							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" class="validation-message"></label>
 							<input type="text" th:field="*{cardNumber}" placeholder="Card number" class="form-control" /> 
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">User id</label>
 						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="validation-message"></label>
 							<select class="form-control" id="exampleFormControlSelect1" th:field="*{userId}">
 								<option th:each="user : ${userList}" th:value="${user.userId}" th:text="${user.userId}"></option>
 							</select>							
-						</div>
 					</div>
 					<div class="form-group">
-                        <div class="col-sm-9">
                             <label class="text-secondary" style="margin-left:5px;">Active</label>
                             <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('active')}" th:errors="*{active}" class="validation-message"></label>
                             <select class="form-control" id="exampleFormControlSelect1" th:field="*{active}">
                                 <option value="false">inactive</option>
                                 <option value="true">active</option>
                             </select>                           
-                        </div>
                     </div>
 					<div class="form-group">
-						<div class="col-sm-9">
+						<div class="col-sm-6">
 							<button type="submit" class="btn btn-primary btn-block">Add</button>
 						</div>
 					</div>					
 					<span th:utext="${successMessage}"></span>					
 				</form>
-			</div>
 		</div>
 	</div>
 

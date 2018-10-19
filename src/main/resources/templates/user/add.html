@@ -10,60 +10,50 @@
     <div th:replace="/../mainmenu :: mainmenu"></div>
 
     <div>
+        <div class="row" style="height: 50px;">
+           <div class="text-primary" >
+               <h2>
+                   <span class="align-middle" style="margin-left:5px;">Adding user</span>   
+               </h2>
+           </div>
+        </div>
 		<div class="row justify-content-md-center">
-			<div class="col-md-6 col-md-offset-3">
 				<form autocomplete="off" action="#" th:action="@{/user/add}" th:object="${user}" method="post" class="form-horizontal" role="form">
-					<div class="text-primary col-sm-9">
-						<h2>
-						   <span class="align-middle" style="margin-left:5px;">Adding user</span>
-						</h2>
-					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">First name</label>
 							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message"></label>
 							<input type="text" th:field="*{firstName}" placeholder="First name" class="form-control" /> 
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Second name</label>
 							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('secondName')}" th:errors="*{secondName}" class="validation-message"></label>
 							<input type="text" th:field="*{secondName}" placeholder="Second name" class="form-control" /> 
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Phone number</label>
 							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="validation-message"></label>
 							<input type="text" th:field="*{phoneNumber}" placeholder="Phone number" class="form-control" /> 
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Email</label>
 							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
 							<input type="text" th:field="*{email}" placeholder="Email" class="form-control" /> 
-						</div>
 					</div>
 					<div class="form-group">
-                        <div class="col-sm-9">
                             <label class="text-secondary" style="margin-left:5px;">Active</label>
                             <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('active')}" th:errors="*{active}" class="validation-message"></label>
                             <select class="form-control" id="exampleFormControlSelect1" th:field="*{active}">
                                 <option value="false">inactive</option>
                                 <option value="true">active</option>
                             </select>                           
-                        </div>
                     </div>
 					<div class="form-group">
-						<div class="col-sm-9">
+						<div class="col-sm-6">
 							<button type="submit" class="btn btn-primary btn-block">Add</button>
 						</div>
 					</div>					
 					<span th:utext="${successMessage}"></span>					
 				</form>
-			</div>
 		</div>
 	</div>
 

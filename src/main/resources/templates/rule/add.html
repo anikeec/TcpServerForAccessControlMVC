@@ -10,73 +10,63 @@
     <div th:replace="/../mainmenu :: mainmenu"></div>
 
     <div>
-		<div class="row justify-content-md-center">
-			<div class="col-md-6 col-md-offset-3">
+<!-- 		<div class="row justify-content-md-center"> -->
+        <div class="row" style="height: 50px;">
+           <div class="text-primary" >
+               <h2>
+                   <span class="align-middle" style="margin-left:5px;">Adding rule</span>   
+               </h2>
+           </div>
+        </div>
+			<div class="row">
 				<form autocomplete="off" action="#" th:action="@{/rule/add}" th:object="${rule}" method="post" class="form-horizontal" role="form">
-					<div class="text-primary col-sm-9">
-						<h2>
-						   <span class="align-middle" style="margin-left:5px;">Adding rule</span>
-						</h2>
-					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Card id</label>
 						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('cardId')}" th:errors="*{cardId}" class="validation-message"></label>
 							<select class="form-control" id="exampleFormControlSelect1" th:field="*{cardId}">
 								<option th:each="card : ${cardList}" th:value="${card.cardId}" th:text="${card.cardId} + ' - ' + ${card.cardNumber} "></option>
 							</select>							
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Device id</label>
 						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('deviceId')}" th:errors="*{deviceId}" class="validation-message"></label>
 							<select class="form-control" id="exampleFormControlSelect1" th:field="*{deviceId}">
 								<option th:each="device : ${deviceList}" th:value="${device.deviceId}" th:text="${device.deviceId} + ' - ' + ${device.deviceNumber} "></option>
 							</select>							
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Event id</label>
 						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('eventId')}" th:errors="*{eventId}" class="validation-message"></label>
 							<select class="form-control" id="exampleFormControlSelect1" th:field="*{eventId}">
 								<option th:each="eventType : ${eventTypeList}" th:value="${eventType.eventId}" th:text="${eventType.eventId} + ' - ' + ${eventType.description} "></option>
 							</select>							
-						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">RuleType id</label>
 						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('ruleTypeId')}" th:errors="*{ruleTypeId}" class="validation-message"></label>
 							<select class="form-control" id="exampleFormControlSelect1" th:field="*{ruleTypeId}">
 								<option th:each="ruleType : ${ruleTypeList}" th:value="${ruleType.ruleTypeId}" th:text="${ruleType.ruleTypeId} + ' - ' + ${ruleType.description} "></option>
 							</select>							
-						</div>
 					</div>					
 					<div class="form-group">
-						<div class="col-sm-9">
 						    <label class="text-secondary" style="margin-left:5px;">Date begin</label>
 							<label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('dateBegin')}" th:errors="*{dateBegin}" class="validation-message"></label>
 							<input type="datetime-local" th:field="*{dateBegin}" placeholder="Date begin" class="form-control" min="2018-01-01T00:00"/> 
-						</div>
 					</div>
 					<div class="form-group">
-                        <div class="col-sm-9">
                             <label class="text-secondary" style="margin-left:5px;">Date end</label>
                             <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}" class="validation-message"></label>
                             <input type="datetime-local" th:field="*{dateEnd}" placeholder="Date end" class="form-control" min="2018-01-01T00:00"/> 
-                        </div>
                     </div>
-					<div class="form-group">
-						<div class="col-sm-9">
+					<div class="form-group ">
+						<div class="col-sm-6">
 							<button type="submit" class="btn btn-primary btn-block">Add</button>
 						</div>
 					</div>					
 					<span th:utext="${successMessage}"></span>					
 				</form>
 			</div>
-		</div>
+<!-- 		</div> -->
 	</div>
 
     <div th:replace="/../pagescriptsjs :: pagescriptsjs"></div>
