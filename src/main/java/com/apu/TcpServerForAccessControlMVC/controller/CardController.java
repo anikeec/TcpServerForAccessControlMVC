@@ -1,11 +1,7 @@
 package com.apu.TcpServerForAccessControlMVC.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -98,17 +94,8 @@ public class CardController {
     
     @RequestMapping(value = "/card/activate", method = RequestMethod.POST)
     public ModelAndView activateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
-        Assert.notNull(entity.getEntityId(), "CardId has not be null.");        
-        String errorMessage = null;
-        List<Card> cardList = cardService.findById(entity.getEntityId());
-        if((cardList == null) || (cardList.size() == 0)) {
-            errorMessage = "Error. This card id has't registered in the system yet";
-        } else {
-            Card card = cardList.get(0);
-            card.setActive(true);
-            cardService.save(card);
-        } 
-        
+        Assert.notNull(entity.getEntityId(), "CardId has not be null.");     
+        String errorMessage = utils.saveEntity(entity, true);
         ModelAndView modelAndView = utils.FillMvcEntity("Activate card", "/card/activate", false);
         if (errorMessage != null) {
             modelAndView.addObject("successMessage", errorMessage);
@@ -128,17 +115,8 @@ public class CardController {
     
     @RequestMapping(value = "/card/inactivate", method = RequestMethod.POST)
     public ModelAndView inactivateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
-        Assert.notNull(entity.getEntityId(), "CardId has not be null.");
-        String errorMessage = null;
-        List<Card> cardList = cardService.findById(entity.getEntityId());
-        if((cardList == null) || (cardList.size() == 0)) {
-            errorMessage = "Error. This card id has't registered in the system yet";
-        } else {
-            Card card = cardList.get(0);
-            card.setActive(false);
-            cardService.save(card);
-        }             
-        
+        Assert.notNull(entity.getEntityId(), "CardId has not be null.");        
+        String errorMessage = utils.saveEntity(entity, false);         
         ModelAndView modelAndView = utils.FillMvcEntity("Inactivate card", "/card/inactivate", true);
         if (errorMessage != null) {
             modelAndView.addObject("successMessage", errorMessage);

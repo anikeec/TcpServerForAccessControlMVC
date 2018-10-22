@@ -20,14 +20,14 @@ public class ServiceUtils<S extends ActivatableEntity> {
         this.service = service;
     }
 
-    public String saveEntity(VisualEntity visualEntity) {
+    public String saveEntity(VisualEntity visualEntity, boolean activeValue) {
         String errorMessage = null;
         List<S> list = service.findById(visualEntity.getEntityId());
         if((list == null) || (list.size() == 0)) {
             errorMessage = "Error. Entity with this id has't registered in the system yet";
         } else {
             S entity = list.get(0);
-            entity.setActive(true);
+            entity.setActive(activeValue);
             service.save(entity);
         }
         
