@@ -9,7 +9,7 @@ import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
 
 @Service
-public class CardService {
+public class CardService implements MVCService<Card> {
 
     @Autowired
     private CardRepository cardRepository;
@@ -18,7 +18,8 @@ public class CardService {
         return cardRepository.findAll();
     };
     
-    public List<Card> findByCardId(Integer cardId) {
+    @Override
+    public List<Card> findById(Integer cardId) {
         return cardRepository.findByCardId(cardId);
     }
     
@@ -30,7 +31,8 @@ public class CardService {
         return cardRepository.findByActive(active);
     }
 
-    public <S extends Card> S save(S entity) {
+    @Override
+    public Card save(Card entity) {
         return cardRepository.save(entity);
     }
 
