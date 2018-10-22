@@ -20,7 +20,10 @@
            </div>
         </div>
 		<div>
-	       If you see this page, something went by wrong way :(
+		  <span th:if="${message != null}" th:text="${message}"></span>
+	      <span th:if="${message == null}" th:text="${message}">
+	           If you see this page, something went by wrong way :(
+	      </span>
 	    </div>
 	</div>
 
