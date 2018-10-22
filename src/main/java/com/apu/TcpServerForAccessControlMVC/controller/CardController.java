@@ -1,6 +1,7 @@
 package com.apu.TcpServerForAccessControlMVC.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
+import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
 
@@ -85,11 +87,15 @@ public class CardController {
     @RequestMapping(value="/card/activate", method = RequestMethod.GET)
     public ModelAndView activateCard(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        Card card = new Card();
-        modelAndView.addObject("card", card);
+        VisualEntity entity = new VisualEntity();
+        entity.setPageName("Activate card");
+        entity.setElementName("Card");        
         List<Card> cardList = cardService.findByActive(false);
-        modelAndView.addObject("cardList", cardList);
-        modelAndView.setViewName("card/activate"); 
+        for(Card c:cardList) {
+            entity.addElementToList(c.getCardId(), c.getCardId() + " - " + c.getCardNumber());
+        }
+        modelAndView.addObject("entity", entity);
+        modelAndView.setViewName("activate"); 
         if(principal != null) {
             modelAndView.addObject("name", principal.getName());
         }
@@ -97,27 +103,37 @@ public class CardController {
     }
     
     @RequestMapping(value = "/card/activate", method = RequestMethod.POST)
-    public ModelAndView activateCard(@Valid Card card, BindingResult bindingResult, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();        
-        List<Card> cardList = cardService.findByCardId(card.getCardId());
-        if((cardList == null) || (cardList.size() == 0)) {
-            bindingResult
-                .rejectValue("cardId", "error.cardId",
-                        "This card id has't registered in the system yet");
+    public ModelAndView activateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
+        String errorMessage = null;
+        ModelAndView modelAndView = new ModelAndView(); 
+        List<Card> cardList = null;
+        if(entity.getEntityId() != null) {
+            cardList = cardService.findByCardId(entity.getEntityId());
+            if((cardList == null) || (cardList.size() == 0)) {
+                errorMessage = "Error. This card id has't registered in the system yet";
+            } else {
+                Card card = cardList.get(0);
+                card.setActive(true);
+                cardService.save(card);
+            } 
         } else {
-            card = cardList.get(0);
-            card.setActive(true);
-            cardService.save(card);
-        }            
+            errorMessage = "Error. Choosing card is wrong.";
+        }
         
+        entity = new VisualEntity();
+        entity.setPageName("Activate card");
+        entity.setElementName("Card");        
         cardList = cardService.findByActive(false);
-        modelAndView.addObject("cardList", cardList);
-        if (bindingResult.hasErrors()) {            
-            modelAndView.setViewName("card/activate");
+        for(Card c:cardList) {
+            entity.addElementToList(c.getCardId(), c.getCardId() + " - " + c.getCardNumber());
+        }
+        modelAndView.addObject("entity", entity);
+        if (errorMessage != null) {
+            modelAndView.addObject("successMessage", errorMessage);
+            modelAndView.setViewName("activate");
         } else {            
             modelAndView.addObject("successMessage", "Card has been activated successfully");
-            modelAndView.addObject("card", new Card());
-            modelAndView.setViewName("card/activate");
+            modelAndView.setViewName("activate");
         }
         if(principal != null) {
             modelAndView.addObject("name", principal.getName());

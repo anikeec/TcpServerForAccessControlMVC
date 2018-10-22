@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	
+<head th:include="/../pageheader :: pageheader"></head>
+
+<body>
+	<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+    
+    <div th:replace="/../mainmenu :: mainmenu"></div>
+
+    <div>
+		<div class="row">
+				<form autocomplete="off" action="#" th:action="${entity.getActionValue()}" th:object="${entity}" method="post" class="form-horizontal" role="form">
+					<div class="text-primary col-sm-12">
+						<h2>
+						   <span class="align-middle" style="margin-left:5px;" th:text="${entity.getPageName()}"></span>
+						</h2>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+						    <label class="text-secondary" style="margin-left:5px;" th:text="${entity.getElementName()}"></label>
+						    <label style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('entityId')}" th:errors="*{entityId}" class="validation-message"></label>
+							<select class="form-control" id="FormControlSelect" th:field="*{entityId}">
+								<option th:each="entityTemp : ${entity.getElementsList()}" th:value="${entityTemp.id}" th:text="${entityTemp.value}"></option>
+							</select>							
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<button type="submit" class="btn btn-primary btn-block">Activate</button>
+						</div>
+					</div>
+					<div align="center" th:if="${param.error}">
+		                <p style="font-size: 20; color: #FF1C19;">Something wrong, please check</p>
+		            </div>
+					<span th:utext="${successMessage}"></span>				
+				</form>
+		</div>
+	</div>
+
+    <div th:replace="/../pagescriptsjs :: pagescriptsjs"></div>
+    </div>
+    </div>
+</body>
+</html>
