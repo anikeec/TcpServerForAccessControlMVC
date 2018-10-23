@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
-import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils;
+import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtils;
 
 @Controller
 public class DeviceController {
@@ -30,7 +30,7 @@ public class DeviceController {
     
     @Autowired
     @Qualifier("deviceServiceUtils")
-    private ServiceUtils<Device> utils;
+    private ActivatableServiceUtils<Device> utils;
     
     @GetMapping("/device/view")
     public ModelAndView index(Principal principal) {

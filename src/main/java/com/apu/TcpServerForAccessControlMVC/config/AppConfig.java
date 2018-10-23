@@ -18,6 +18,7 @@ import com.apu.TcpServerForAccessControlMVC.redis.RedisMessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessageSubscriber;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
+import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtils;
 import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils; 
 
 @Configuration
@@ -61,14 +62,19 @@ public class AppConfig {
         return new ChannelTopic("pubsub:queue");
     }
     
+    @Bean(name = "accessMessageServiceUtils")
+    ServiceUtils accessMessageServiceUtils() {
+        return new ServiceUtils();
+    }
+    
     @Bean(name = "cardServiceUtils")
-    ServiceUtils<Card> cardServiceUtils(CardService service) {
-        return new ServiceUtils<Card>(service);
+    ActivatableServiceUtils<Card> cardServiceUtils(CardService service) {
+        return new ActivatableServiceUtils<Card>(service);
     }
     
     @Bean(name = "deviceServiceUtils")
-    ServiceUtils<Device> deviceServiceUtils(DeviceService service) {
-        return new ServiceUtils<Device>(service);
+    ActivatableServiceUtils<Device> deviceServiceUtils(DeviceService service) {
+        return new ActivatableServiceUtils<Device>(service);
     }
     
 }

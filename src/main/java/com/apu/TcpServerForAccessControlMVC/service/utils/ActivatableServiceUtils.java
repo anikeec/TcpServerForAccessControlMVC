@@ -1,28 +1,22 @@
 package com.apu.TcpServerForAccessControlMVC.service.utils;
 
-import java.security.Principal;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
 import com.apu.TcpServerForAccessControlDB.interfaces.VisualizableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
-import com.apu.TcpServerForAccessControlMVC.service.i.MVCService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcFullService;
 
-public class ServiceUtils<S extends ActivatableEntity> {
+public class ActivatableServiceUtils<S extends ActivatableEntity> extends ServiceUtils {
     
-    private MVCService<S> service;
+    private MvcFullService<S> service;
     
-    public ServiceUtils(MVCService<S> service) {
+    public ActivatableServiceUtils(MvcFullService<S> service) {
         super();
         this.service = service;
     }
-    
-//    public void setService(MVCService<S> service) {
-//        this.service = service;
-//    }
 
     public String saveEntity(VisualEntity visualEntity, boolean activeValue) {
         String errorMessage = null;
@@ -53,20 +47,6 @@ public class ServiceUtils<S extends ActivatableEntity> {
         modelAndView.addObject("entity", entity);
         modelAndView.setViewName("activate");
         return modelAndView;
-    }
-    
-    public void setResultMessage(ModelAndView modelAndView, String errorMessage, String successMessage) {
-        if (errorMessage != null) {
-            modelAndView.addObject("successMessage", errorMessage);
-        } else {            
-            modelAndView.addObject("successMessage", successMessage);
-        }
-    }
-    
-    public void setUserName(ModelAndView modelAndView, Principal principal) {
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
     }
     
 }

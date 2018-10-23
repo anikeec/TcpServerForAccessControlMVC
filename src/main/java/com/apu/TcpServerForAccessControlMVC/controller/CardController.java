@@ -20,7 +20,7 @@ import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
-import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils;
+import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtils;
 
 @Controller
 public class CardController {
@@ -33,7 +33,7 @@ public class CardController {
 
     @Autowired
     @Qualifier("cardServiceUtils")
-    private ServiceUtils<Card> utils;
+    private ActivatableServiceUtils<Card> utils;
     
     @GetMapping("/card/view")
     public ModelAndView index(Principal principal) {

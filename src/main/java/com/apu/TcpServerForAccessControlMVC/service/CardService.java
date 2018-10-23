@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
-import com.apu.TcpServerForAccessControlMVC.service.i.MVCService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcFullService;
 
 @Service
-public class CardService implements MVCService<Card> {
+public class CardService implements MvcFullService<Card> {
 
     @Autowired
     private CardRepository cardRepository;
