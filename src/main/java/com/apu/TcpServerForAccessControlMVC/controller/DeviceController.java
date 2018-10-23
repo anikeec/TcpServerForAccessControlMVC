@@ -34,13 +34,12 @@ public class DeviceController {
     
     @GetMapping("/device/view")
     public ModelAndView index(Principal principal) {
-        Map<String, Object> model = new HashMap<>();
-        List<Device> deviceList = deviceService.findAll();
-        model.put("deviceList", deviceList);
-        if(principal != null) {
-            model.put("name", principal.getName());
-        }
-        return new ModelAndView("device/view", model);
+        List<Device> deviceList = deviceService.findAll();            
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("deviceList", deviceList);
+        utils.setUserName(modelAndView, principal);
+        modelAndView.setViewName("device/view");      
+        return modelAndView;
     }
     
     @RequestMapping(value="/device/add", method = RequestMethod.GET)
@@ -48,9 +47,7 @@ public class DeviceController {
         ModelAndView modelAndView = new ModelAndView();
         Device device = new Device();
         modelAndView.addObject("device", device);
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
+        utils.setUserName(modelAndView, principal);
         modelAndView.setViewName("device/add");        
         return modelAndView;
     }
@@ -72,9 +69,7 @@ public class DeviceController {
             modelAndView.addObject("device", new Device());
             modelAndView.setViewName("device/add");
         }
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
+        utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
     
