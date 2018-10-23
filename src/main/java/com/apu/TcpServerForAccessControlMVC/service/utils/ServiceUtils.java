@@ -40,7 +40,7 @@ public class ServiceUtils<S extends ActivatableEntity> {
         return errorMessage;
     }   
 
-    public ModelAndView FillMvcEntity(String elementName, String pageName, String actionValue, boolean activeValue) {
+    public ModelAndView fillMvcEntity(String elementName, String pageName, String actionValue, boolean activeValue) {
         ModelAndView modelAndView = new ModelAndView();
         VisualEntity entity = new VisualEntity();
         entity.setPageName(pageName);
@@ -58,6 +58,14 @@ public class ServiceUtils<S extends ActivatableEntity> {
         modelAndView.addObject("entity", entity);
         modelAndView.setViewName("activate");
         return modelAndView;
+    }
+    
+    public void setResultMessage(ModelAndView modelAndView, String errorMessage, String successMessage) {
+        if (errorMessage != null) {
+            modelAndView.addObject("successMessage", errorMessage);
+        } else {            
+            modelAndView.addObject("successMessage", successMessage);
+        }
     }
     
     public void setUserName(ModelAndView modelAndView, Principal principal) {

@@ -85,7 +85,7 @@ public class CardController {
     
     @RequestMapping(value="/card/activate", method = RequestMethod.GET)
     public ModelAndView activateCard(Principal principal) {
-        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Activate card", "/card/activate", false);  
+        ModelAndView modelAndView = utils.fillMvcEntity("Card", "Activate card", "/card/activate", false);  
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
@@ -94,19 +94,15 @@ public class CardController {
     public ModelAndView activateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
         Assert.notNull(entity.getEntityId(), "CardId has not be null.");     
         String errorMessage = utils.saveEntity(entity, true);
-        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Activate card", "/card/activate", false);
-        if (errorMessage != null) {
-            modelAndView.addObject("successMessage", errorMessage);
-        } else {            
-            modelAndView.addObject("successMessage", "Card has been activated successfully");
-        }
+        ModelAndView modelAndView = utils.fillMvcEntity("Card", "Activate card", "/card/activate", false);
+        utils.setResultMessage(modelAndView, errorMessage, "Card has been activated successfully");
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
     
     @RequestMapping(value="/card/inactivate", method = RequestMethod.GET)
     public ModelAndView inactivateCard(Principal principal) {
-        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Inactivate card", "/card/inactivate", true);
+        ModelAndView modelAndView = utils.fillMvcEntity("Card", "Inactivate card", "/card/inactivate", true);
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
@@ -115,12 +111,8 @@ public class CardController {
     public ModelAndView inactivateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
         Assert.notNull(entity.getEntityId(), "CardId has not be null.");        
         String errorMessage = utils.saveEntity(entity, false);         
-        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Inactivate card", "/card/inactivate", true);
-        if (errorMessage != null) {
-            modelAndView.addObject("successMessage", errorMessage);
-        } else {            
-            modelAndView.addObject("successMessage", "Card has been inactivated successfully");
-        }
+        ModelAndView modelAndView = utils.fillMvcEntity("Card", "Inactivate card", "/card/inactivate", true);
+        utils.setResultMessage(modelAndView, errorMessage, "Card has been inactivated successfully");
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }

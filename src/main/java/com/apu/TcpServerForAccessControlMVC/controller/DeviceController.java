@@ -75,7 +75,7 @@ public class DeviceController {
     
     @RequestMapping(value="/device/activate", method = RequestMethod.GET)
     public ModelAndView activate(Principal principal) {
-        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Activate device", "/device/activate", false);  
+        ModelAndView modelAndView = utils.fillMvcEntity("Device", "Activate device", "/device/activate", false);  
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
@@ -84,19 +84,15 @@ public class DeviceController {
     public ModelAndView activate(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
         Assert.notNull(entity.getEntityId(), "DeviceId has not be null.");     
         String errorMessage = utils.saveEntity(entity, true);
-        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Activate device", "/device/activate", false);
-        if (errorMessage != null) {
-            modelAndView.addObject("successMessage", errorMessage);
-        } else {            
-            modelAndView.addObject("successMessage", "Device has been activated successfully");
-        }
+        ModelAndView modelAndView = utils.fillMvcEntity("Device", "Activate device", "/device/activate", false);
+        utils.setResultMessage(modelAndView, errorMessage, "Device has been activated successfully");
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
     
     @RequestMapping(value="/device/inactivate", method = RequestMethod.GET)
     public ModelAndView inactivate(Principal principal) {
-        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Inactivate device", "/device/inactivate", true);
+        ModelAndView modelAndView = utils.fillMvcEntity("Device", "Inactivate device", "/device/inactivate", true);
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
@@ -105,12 +101,8 @@ public class DeviceController {
     public ModelAndView inactivateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
         Assert.notNull(entity.getEntityId(), "DeviceId has not be null.");        
         String errorMessage = utils.saveEntity(entity, false);         
-        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Inactivate device", "/device/inactivate", true);
-        if (errorMessage != null) {
-            modelAndView.addObject("successMessage", errorMessage);
-        } else {            
-            modelAndView.addObject("successMessage", "Device has been inactivated successfully");
-        }
+        ModelAndView modelAndView = utils.fillMvcEntity("Device", "Inactivate device", "/device/inactivate", true);
+        utils.setResultMessage(modelAndView, errorMessage, "Device has been inactivated successfully");
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
