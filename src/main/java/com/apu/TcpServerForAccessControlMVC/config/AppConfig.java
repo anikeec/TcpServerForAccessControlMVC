@@ -11,9 +11,14 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
+import com.apu.TcpServerForAccessControlDB.entity.Card;
+import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlMVC.redis.MessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessageSubscriber;
+import com.apu.TcpServerForAccessControlMVC.service.CardService;
+import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
+import com.apu.TcpServerForAccessControlMVC.service.ServiceUtils; 
 
 @Configuration
 @ComponentScan({"com.apu.TcpServerForAccessControlDB","com.apu.TcpServerForAccessControlMVC"})
@@ -54,6 +59,20 @@ public class AppConfig {
     @Bean
     ChannelTopic topic() {
         return new ChannelTopic("pubsub:queue");
+    }
+    
+    @Bean(name = "cardServiceUtils")
+    ServiceUtils<Card> cardServiceUtils(CardService service) {
+        ServiceUtils<Card> su = new ServiceUtils<Card>();
+        su.setService(service);
+        return su;
+    }
+    
+    @Bean(name = "deviceServiceUtils")
+    ServiceUtils<Device> deviceServiceUtils(DeviceService service) {
+        ServiceUtils<Device> su = new ServiceUtils<Device>();
+        su.setService(service);
+        return su;
     }
     
 }

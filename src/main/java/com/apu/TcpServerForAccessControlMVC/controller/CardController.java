@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -24,19 +25,15 @@ import com.apu.TcpServerForAccessControlMVC.service.UserService;
 @Controller
 public class CardController {
     
-    private final CardService cardService;
+    @Autowired
+    private CardService cardService;
     
     @Autowired
     private UserService userService;    
 
-    private final ServiceUtils<Card> utils;
-
     @Autowired
-    public CardController(ServiceUtils<Card> serviceUtils, CardService cardService) {
-        this.cardService = cardService;
-        serviceUtils.setService(cardService);
-        this.utils = serviceUtils;
-    }
+    @Qualifier("cardServiceUtils")
+    private ServiceUtils<Card> utils;
     
     @GetMapping("/card/view")
     public ModelAndView index(Principal principal) {

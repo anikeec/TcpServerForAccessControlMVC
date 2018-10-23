@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -24,16 +25,12 @@ import com.apu.TcpServerForAccessControlMVC.service.ServiceUtils;
 @Controller
 public class DeviceController {
     
-    private final DeviceService deviceService;
-    
-    private final ServiceUtils<Device> utils;
-
     @Autowired
-    public DeviceController(ServiceUtils<Device> serviceUtils, DeviceService deviceService) {
-        this.deviceService = deviceService;
-        serviceUtils.setService(deviceService);
-        this.utils = serviceUtils;
-    }
+    private DeviceService deviceService;
+    
+    @Autowired
+    @Qualifier("deviceServiceUtils")
+    private ServiceUtils<Device> utils;
     
     @GetMapping("/device/view")
     public ModelAndView index(Principal principal) {
