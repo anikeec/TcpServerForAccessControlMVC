@@ -9,7 +9,7 @@ import com.apu.TcpServerForAccessControlDB.interfaces.VisualizableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.i.MvcFullService;
 
-public class ActivatableServiceUtils<S extends ActivatableEntity> extends ServiceUtils {
+public class ActivatableServiceUtils<S extends ActivatableEntity> extends PageableServiceUtils<S> {
     
     private MvcFullService<S> service;
     
