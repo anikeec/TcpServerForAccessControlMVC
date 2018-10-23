@@ -16,11 +16,6 @@ public class ServiceUtils<S extends ActivatableEntity> {
     
     private MVCService<S> service;
     
-//    public ServiceUtils(MVCService<S> service) {
-//        super();
-//        this.service = service;
-//    }
-    
     public void setService(MVCService<S> service) {
         this.service = service;
     }
