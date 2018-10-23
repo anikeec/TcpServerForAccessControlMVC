@@ -24,8 +24,7 @@ import com.apu.TcpServerForAccessControlMVC.service.UserService;
 @Controller
 public class CardController {
     
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
     
     @Autowired
     private UserService userService;    
@@ -33,7 +32,9 @@ public class CardController {
     private final ServiceUtils<Card> utils;
 
     @Autowired
-    public CardController(ServiceUtils<Card> serviceUtils) {
+    public CardController(ServiceUtils<Card> serviceUtils, CardService cardService) {
+        this.cardService = cardService;
+        serviceUtils.setService(cardService);
         this.utils = serviceUtils;
     }
     
@@ -87,7 +88,7 @@ public class CardController {
     
     @RequestMapping(value="/card/activate", method = RequestMethod.GET)
     public ModelAndView activateCard(Principal principal) {
-        ModelAndView modelAndView = utils.FillMvcEntity("Activate card", "/card/activate", false);  
+        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Activate card", "/card/activate", false);  
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
@@ -96,7 +97,7 @@ public class CardController {
     public ModelAndView activateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
         Assert.notNull(entity.getEntityId(), "CardId has not be null.");     
         String errorMessage = utils.saveEntity(entity, true);
-        ModelAndView modelAndView = utils.FillMvcEntity("Activate card", "/card/activate", false);
+        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Activate card", "/card/activate", false);
         if (errorMessage != null) {
             modelAndView.addObject("successMessage", errorMessage);
         } else {            
@@ -108,7 +109,7 @@ public class CardController {
     
     @RequestMapping(value="/card/inactivate", method = RequestMethod.GET)
     public ModelAndView inactivateCard(Principal principal) {
-        ModelAndView modelAndView = utils.FillMvcEntity("Inactivate card", "/card/inactivate", true);
+        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Inactivate card", "/card/inactivate", true);
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
@@ -117,7 +118,7 @@ public class CardController {
     public ModelAndView inactivateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
         Assert.notNull(entity.getEntityId(), "CardId has not be null.");        
         String errorMessage = utils.saveEntity(entity, false);         
-        ModelAndView modelAndView = utils.FillMvcEntity("Inactivate card", "/card/inactivate", true);
+        ModelAndView modelAndView = utils.FillMvcEntity("Card", "Inactivate card", "/card/inactivate", true);
         if (errorMessage != null) {
             modelAndView.addObject("successMessage", errorMessage);
         } else {            

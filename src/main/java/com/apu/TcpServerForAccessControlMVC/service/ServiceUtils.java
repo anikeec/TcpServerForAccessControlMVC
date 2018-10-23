@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.apu.TcpServerForAccessControlDB.ActivatableEntity;
 import com.apu.TcpServerForAccessControlDB.entity.Card;
+import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 
 @Component
@@ -15,8 +15,12 @@ public class ServiceUtils<S extends ActivatableEntity> {
     
     private MVCService<S> service;
     
-    public ServiceUtils(MVCService<S> service) {
-        super();
+//    public ServiceUtils(MVCService<S> service) {
+//        super();
+//        this.service = service;
+//    }
+    
+    public void setService(MVCService<S> service) {
         this.service = service;
     }
 
@@ -32,13 +36,13 @@ public class ServiceUtils<S extends ActivatableEntity> {
         }
         
         return errorMessage;
-    }
-    
-    public ModelAndView FillMvcEntity(String pageName, String actionValue, boolean activeValue) {
+    }   
+
+    public ModelAndView FillMvcEntity(String elementName, String pageName, String actionValue, boolean activeValue) {
         ModelAndView modelAndView = new ModelAndView();
         VisualEntity entity = new VisualEntity();
         entity.setPageName(pageName);
-        entity.setElementName("Card");     
+        entity.setElementName(elementName);     
         entity.setActionValue(actionValue);
         List<S> list = service.findByActive(activeValue);
         for(S c:list) {
