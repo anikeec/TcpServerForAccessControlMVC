@@ -119,32 +119,5 @@ public class DeviceController {
         utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
-//    public ModelAndView inactivate(@Valid Device device, BindingResult bindingResult, Principal principal) {
-//        ModelAndView modelAndView = new ModelAndView();        
-//        List<Device> deviceList = deviceService.findById(device.getDeviceId());
-//        if((deviceList == null) || (deviceList.size() == 0)) {
-//            bindingResult
-//                .rejectValue("deviceId", "error.deviceId",
-//                        "This device id has't registered in the system yet");
-//        } else {
-//            device = deviceList.get(0);
-//            device.setActive(false);
-//            deviceService.save(device);
-//        }            
-//        
-//        deviceList = deviceService.findByActive(true);
-//        modelAndView.addObject("deviceList", deviceList);
-//        if (bindingResult.hasErrors()) {            
-//            modelAndView.setViewName("device/inactivate");
-//        } else {            
-//            modelAndView.addObject("successMessage", "Device has been inactivated successfully");
-//            modelAndView.addObject("device", new Device());
-//            modelAndView.setViewName("device/inactivate");
-//        }
-//        if(principal != null) {
-//            modelAndView.addObject("name", principal.getName());
-//        }
-//        return modelAndView;
-//    }
     
 }
