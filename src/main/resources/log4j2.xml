@@ -15,7 +15,7 @@
         <Property name="Sysoutlogfilename">sysout.log</Property>
         <Property name="ThymeleafLogFilename">thymeleaf.log</Property>
         <Property name="HibernateLogFilename">hibernate.log</Property>
-        <Property name="SpringIntegrationlogfilename">spIntegration.log</Property>
+        <Property name="Springlogfilename">spring.log</Property>
     </Properties>
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
@@ -47,12 +47,12 @@
             <AppenderRef ref="SysoutFileLogger"/>
         </Async>
         
-        <!-- Logging for Spring Integration -->
-        <File name="SpringIntegrationLogger" fileName="${SpringIntegrationlogfilename}" immediateFlush="true">
+        <!-- Logging for Spring -->
+        <File name="SpringLogger" fileName="${Springlogfilename}" immediateFlush="true">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
         </File>
-        <Async name="SpringIntegrationAsync">
-            <AppenderRef ref="SpringIntegrationLogger"/>
+        <Async name="SpringAsync">
+            <AppenderRef ref="SpringLogger"/>
         </Async>
         
         <!-- Logging for other application information -->
@@ -81,9 +81,9 @@
            <AppenderRef ref="SysoutAsync" />
        </Logger>
        
-       <!-- Logging for Spring Integration -->      
-       <Logger name="org.springframework.integration" level="ALL" additivity="false">
-           <AppenderRef ref="SpringIntegrationAsync" />
+       <!-- Logging for Spring -->      
+       <Logger name="org.springframework" level="ALL" additivity="false">
+           <AppenderRef ref="SpringAsync" />
        </Logger>        
 
        <!-- Logging for other application information -->
