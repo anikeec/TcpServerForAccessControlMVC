@@ -11,14 +11,17 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
+import com.apu.TcpServerForAccessControlDB.entity.AccessMessage;
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlMVC.redis.MessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessageSubscriber;
+import com.apu.TcpServerForAccessControlMVC.service.AccessMessageService;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
 import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtils;
+import com.apu.TcpServerForAccessControlMVC.service.utils.PageableServiceUtils;
 import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils; 
 
 @Configuration
@@ -63,8 +66,8 @@ public class AppConfig {
     }
     
     @Bean(name = "accessMessageServiceUtils")
-    ServiceUtils accessMessageServiceUtils() {
-        return new ServiceUtils();
+    PageableServiceUtils<AccessMessage> accessMessageServiceUtils(AccessMessageService amService) {
+        return new PageableServiceUtils<AccessMessage>(amService);
     }
     
     @Bean(name = "cardServiceUtils")

@@ -22,39 +22,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.AccessMessage;
-import com.apu.TcpServerForAccessControlMVC.PageWrapper;
 import com.apu.TcpServerForAccessControlMVC.service.AccessMessageService;
-import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils;
+import com.apu.TcpServerForAccessControlMVC.service.utils.PageableServiceUtils;
 
 @Controller
 public class AccessMessageController {
     
-    @Autowired
-    private AccessMessageService accessMessageService;
+//    @Autowired
+//    private AccessMessageService accessMessageService;
     
     @Autowired
     @Qualifier("accessMessageServiceUtils")
-    private ServiceUtils utils;
+    private PageableServiceUtils<AccessMessage> utils;    
     
-    private static int PAGE_SIZE = 10;
     
     @GetMapping("/accessMessage/view")
     public ModelAndView index(Principal principal,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer pageSize) {
         ModelAndView modelAndView = new ModelAndView();
-//        Map<String, Object> model = new HashMap<>();
-        Pageable pageable = null;
-        if((page!=null)&&(pageSize!=null)) {
-            pageable = PageRequest.of(page-1, pageSize);
-        } else {
-            pageable = PageRequest.of(0, PAGE_SIZE);
-        }        
-
-        Page<AccessMessage> accessMessagePage = accessMessageService.findAll(pageable);
-        PageWrapper<AccessMessage> pageWrapper = new PageWrapper<>(accessMessagePage, "");
-        modelAndView.addObject("page", pageWrapper);
-
+        utils.setPages(modelAndView, page, pageSize);
         utils.setUserName(modelAndView, principal);
         modelAndView.setViewName("accessMessage/view");    
         return modelAndView;

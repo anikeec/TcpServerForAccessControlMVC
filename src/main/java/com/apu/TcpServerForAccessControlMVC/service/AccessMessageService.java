@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.AccessMessage;
 import com.apu.TcpServerForAccessControlDB.repository.AccessMessageRepository;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcReadService;
 
 @Service
-public class AccessMessageService {
+public class AccessMessageService implements MvcReadService<AccessMessage> {
 
     @Autowired
     private AccessMessageRepository amRepository;
@@ -22,6 +23,11 @@ public class AccessMessageService {
     
     public List<AccessMessage> findAllByPage(Integer page){
         return amRepository.findAllByPage(page);
+    }
+
+    @Override
+    public List<AccessMessage> findById(Integer id) {
+        throw new UnsupportedOperationException("Method has not supported yet!");
     }
     
 }
