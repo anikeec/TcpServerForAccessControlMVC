@@ -1,4 +1,4 @@
-package com.apu.TcpServerForAccessControlMVC.service;
+package com.apu.TcpServerForAccessControlMVC.service.utils;
 
 import java.security.Principal;
 import java.util.List;
@@ -10,6 +10,7 @@ import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
+import com.apu.TcpServerForAccessControlMVC.service.MVCService;
 
 @Component
 public class ServiceUtils<S extends ActivatableEntity> {

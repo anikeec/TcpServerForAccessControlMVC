@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
-import com.apu.TcpServerForAccessControlMVC.service.ServiceUtils;
+import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils;
 
 @Controller
 public class DeviceController {

@@ -18,7 +18,7 @@ import com.apu.TcpServerForAccessControlMVC.redis.RedisMessagePublisher;
 import com.apu.TcpServerForAccessControlMVC.redis.RedisMessageSubscriber;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
-import com.apu.TcpServerForAccessControlMVC.service.ServiceUtils; 
+import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils; 
 
 @Configuration
 @ComponentScan({"com.apu.TcpServerForAccessControlDB","com.apu.TcpServerForAccessControlMVC"})
