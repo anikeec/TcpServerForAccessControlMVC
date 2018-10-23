@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
+import com.apu.TcpServerForAccessControlDB.interfaces.VisualizableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.MVCService;
 
@@ -48,12 +49,15 @@ public class ServiceUtils<S extends ActivatableEntity> {
         entity.setActionValue(actionValue);
         List<S> list = service.findByActive(activeValue);
         for(S c:list) {
-            if(c instanceof Card) {
-                entity.addElementToList(((Card)c).getCardId(), ((Card)c).getCardId() + " - " + ((Card)c).getCardNumber());
-            } else 
-            if(c instanceof Device) {
-                entity.addElementToList(((Device)c).getDeviceId(), ((Device)c).getDeviceId() + " - " + ((Device)c).getDeviceNumber());
+            if(c instanceof VisualizableEntity) {
+                entity.addElementToList(((VisualizableEntity)c).getId(), ((VisualizableEntity)c).getDescription());
             }
+//            if(c instanceof Card) {
+//                entity.addElementToList(((Card)c).getCardId(), ((Card)c).getCardId() + " - " + ((Card)c).getCardNumber());
+//            } else 
+//            if(c instanceof Device) {
+//                entity.addElementToList(((Device)c).getDeviceId(), ((Device)c).getDeviceId() + " - " + ((Device)c).getDeviceNumber());
+//            }
         }
         modelAndView.addObject("entity", entity);
         modelAndView.setViewName("activate");
