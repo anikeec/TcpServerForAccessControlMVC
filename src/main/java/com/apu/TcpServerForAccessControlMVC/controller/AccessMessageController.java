@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.apu.TcpServerForAccessControlDB.entity.AccessMessage;
 import com.apu.TcpServerForAccessControlMVC.PageWrapper;
 import com.apu.TcpServerForAccessControlMVC.service.AccessMessageService;
+import com.apu.TcpServerForAccessControlMVC.service.utils.ServiceUtils;
 
 @Controller
 public class AccessMessageController {
@@ -30,13 +32,18 @@ public class AccessMessageController {
     @Autowired
     private AccessMessageService accessMessageService;
     
+    @Autowired
+    @Qualifier("accessMessageServiceUtils")
+    private ServiceUtils utils;
+    
     private static int PAGE_SIZE = 10;
     
     @GetMapping("/accessMessage/view")
     public ModelAndView index(Principal principal,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer pageSize) {
-        Map<String, Object> model = new HashMap<>();
+        ModelAndView modelAndView = new ModelAndView();
+//        Map<String, Object> model = new HashMap<>();
         Pageable pageable = null;
         if((page!=null)&&(pageSize!=null)) {
             pageable = PageRequest.of(page-1, pageSize);
@@ -44,15 +51,13 @@ public class AccessMessageController {
             pageable = PageRequest.of(0, PAGE_SIZE);
         }        
 
-        if(principal != null) {
-            model.put("name", principal.getName());
-        }
-        
         Page<AccessMessage> accessMessagePage = accessMessageService.findAll(pageable);
         PageWrapper<AccessMessage> pageWrapper = new PageWrapper<>(accessMessagePage, "");
-        model.put("page", pageWrapper);
+        modelAndView.addObject("page", pageWrapper);
 
-        return new ModelAndView("accessMessage/view", model);
+        utils.setUserName(modelAndView, principal);
+        modelAndView.setViewName("accessMessage/view");    
+        return modelAndView;
     }
     
 //    @GetMapping("/accessMessage/view")
