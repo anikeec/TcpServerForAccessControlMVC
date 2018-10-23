@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.repository.CardRepository;
+import com.apu.TcpServerForAccessControlMVC.service.i.MVCService;
 
 @Service
 public class CardService implements MVCService<Card> {
@@ -16,7 +17,7 @@ public class CardService implements MVCService<Card> {
     
     public List<Card> findAll() {
         return cardRepository.findAll();
-    };
+    }
     
     @Override
     public List<Card> findById(Integer cardId) {

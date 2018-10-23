@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
+import com.apu.TcpServerForAccessControlMVC.service.i.MVCService;
 
 @Service
 public class DeviceService implements MVCService<Device> {

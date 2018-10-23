@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
 import com.apu.TcpServerForAccessControlDB.interfaces.VisualizableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
-import com.apu.TcpServerForAccessControlMVC.service.MVCService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MVCService;
 
 public class ServiceUtils<S extends ActivatableEntity> {
     
