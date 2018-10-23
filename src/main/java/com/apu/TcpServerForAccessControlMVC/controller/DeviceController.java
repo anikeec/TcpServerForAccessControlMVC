@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +17,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Device;
+import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.DeviceService;
+import com.apu.TcpServerForAccessControlMVC.service.ServiceUtils;
 
 @Controller
 public class DeviceController {
     
+    private final DeviceService deviceService;
+    
+    private final ServiceUtils<Device> utils;
+
     @Autowired
-    private DeviceService deviceService;
+    public DeviceController(ServiceUtils<Device> serviceUtils, DeviceService deviceService) {
+        this.deviceService = deviceService;
+        serviceUtils.setService(deviceService);
+        this.utils = serviceUtils;
+    }
     
     @GetMapping("/device/view")
     public ModelAndView index(Principal principal) {
@@ -71,89 +82,72 @@ public class DeviceController {
     }
     
     @RequestMapping(value="/device/activate", method = RequestMethod.GET)
-    public ModelAndView activateDevice(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
-        Device device = new Device();
-        modelAndView.addObject("device", device);
-        List<Device> deviceList = deviceService.findByActive(false);
-        modelAndView.addObject("deviceList", deviceList);
-        modelAndView.setViewName("device/activate"); 
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
+    public ModelAndView activate(Principal principal) {
+        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Activate device", "/device/activate", false);  
+        utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
     
     @RequestMapping(value = "/device/activate", method = RequestMethod.POST)
-    public ModelAndView activateDevice(@Valid Device device, BindingResult bindingResult, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();        
-        List<Device> deviceList = deviceService.findByDeviceId(device.getDeviceId());
-        if((deviceList == null) || (deviceList.size() == 0)) {
-            bindingResult
-                .rejectValue("deviceId", "error.deviceId",
-                        "This device id has't registered in the system yet");
-        } else {
-            device = deviceList.get(0);
-            device.setActive(true);
-            deviceService.save(device);
-        }            
-        
-        deviceList = deviceService.findByActive(false);
-        modelAndView.addObject("deviceList", deviceList);
-        if (bindingResult.hasErrors()) {            
-            modelAndView.setViewName("device/activate");
+    public ModelAndView activate(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
+        Assert.notNull(entity.getEntityId(), "DeviceId has not be null.");     
+        String errorMessage = utils.saveEntity(entity, true);
+        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Activate device", "/device/activate", false);
+        if (errorMessage != null) {
+            modelAndView.addObject("successMessage", errorMessage);
         } else {            
             modelAndView.addObject("successMessage", "Device has been activated successfully");
-            modelAndView.addObject("device", new Device());
-            modelAndView.setViewName("device/activate");
         }
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
+        utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
     
     @RequestMapping(value="/device/inactivate", method = RequestMethod.GET)
-    public ModelAndView inactivateDevice(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
-        Device device = new Device();
-        modelAndView.addObject("device", device);
-        List<Device> deviceList = deviceService.findByActive(true);
-        modelAndView.addObject("deviceList", deviceList);
-        modelAndView.setViewName("device/inactivate");
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
+    public ModelAndView inactivate(Principal principal) {
+        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Inactivate device", "/device/inactivate", true);
+        utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
     
     @RequestMapping(value = "/device/inactivate", method = RequestMethod.POST)
-    public ModelAndView inactivateDevice(@Valid Device device, BindingResult bindingResult, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();        
-        List<Device> deviceList = deviceService.findByDeviceId(device.getDeviceId());
-        if((deviceList == null) || (deviceList.size() == 0)) {
-            bindingResult
-                .rejectValue("deviceId", "error.deviceId",
-                        "This device id has't registered in the system yet");
-        } else {
-            device = deviceList.get(0);
-            device.setActive(false);
-            deviceService.save(device);
-        }            
-        
-        deviceList = deviceService.findByActive(true);
-        modelAndView.addObject("deviceList", deviceList);
-        if (bindingResult.hasErrors()) {            
-            modelAndView.setViewName("device/inactivate");
+    public ModelAndView inactivateCard(@Valid VisualEntity entity, BindingResult bindingResult, Principal principal) {
+        Assert.notNull(entity.getEntityId(), "DeviceId has not be null.");        
+        String errorMessage = utils.saveEntity(entity, false);         
+        ModelAndView modelAndView = utils.FillMvcEntity("Device", "Inactivate device", "/device/inactivate", true);
+        if (errorMessage != null) {
+            modelAndView.addObject("successMessage", errorMessage);
         } else {            
             modelAndView.addObject("successMessage", "Device has been inactivated successfully");
-            modelAndView.addObject("device", new Device());
-            modelAndView.setViewName("device/inactivate");
         }
-        if(principal != null) {
-            modelAndView.addObject("name", principal.getName());
-        }
+        utils.setUserName(modelAndView, principal);
         return modelAndView;
     }
+//    public ModelAndView inactivate(@Valid Device device, BindingResult bindingResult, Principal principal) {
+//        ModelAndView modelAndView = new ModelAndView();        
+//        List<Device> deviceList = deviceService.findById(device.getDeviceId());
+//        if((deviceList == null) || (deviceList.size() == 0)) {
+//            bindingResult
+//                .rejectValue("deviceId", "error.deviceId",
+//                        "This device id has't registered in the system yet");
+//        } else {
+//            device = deviceList.get(0);
+//            device.setActive(false);
+//            deviceService.save(device);
+//        }            
+//        
+//        deviceList = deviceService.findByActive(true);
+//        modelAndView.addObject("deviceList", deviceList);
+//        if (bindingResult.hasErrors()) {            
+//            modelAndView.setViewName("device/inactivate");
+//        } else {            
+//            modelAndView.addObject("successMessage", "Device has been inactivated successfully");
+//            modelAndView.addObject("device", new Device());
+//            modelAndView.setViewName("device/inactivate");
+//        }
+//        if(principal != null) {
+//            modelAndView.addObject("name", principal.getName());
+//        }
+//        return modelAndView;
+//    }
     
 }

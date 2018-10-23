@@ -9,7 +9,7 @@ import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.repository.DeviceRepository;
 
 @Service
-public class DeviceService {
+public class DeviceService implements MVCService<Device> {
 
     @Autowired
     private DeviceRepository deviceRepository;
@@ -26,11 +26,13 @@ public class DeviceService {
         return deviceRepository.findByDeviceNumber(deviceNumber);
     }
     
-    public List<Device> findByDeviceId(Integer deviceId) {
+    @Override
+    public List<Device> findById(Integer deviceId) {
         return deviceRepository.findByDeviceId(deviceId);
     }    
     
-    public <S extends Device> S save(S entity) {
+    @Override
+    public Device save(Device entity) {
         return deviceRepository.save(entity);
     }
 

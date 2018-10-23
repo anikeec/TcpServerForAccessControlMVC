@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
+import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 
@@ -48,6 +49,9 @@ public class ServiceUtils<S extends ActivatableEntity> {
         for(S c:list) {
             if(c instanceof Card) {
                 entity.addElementToList(((Card)c).getCardId(), ((Card)c).getCardId() + " - " + ((Card)c).getCardNumber());
+            } else 
+            if(c instanceof Device) {
+                entity.addElementToList(((Device)c).getDeviceId(), ((Device)c).getDeviceId() + " - " + ((Device)c).getDeviceNumber());
             }
         }
         modelAndView.addObject("entity", entity);
