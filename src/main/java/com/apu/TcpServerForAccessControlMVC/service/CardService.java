@@ -3,6 +3,8 @@ package com.apu.TcpServerForAccessControlMVC.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
@@ -39,6 +41,16 @@ public class CardService implements MvcFullService<Card> {
 
     public void delete(Card entity) {
         cardRepository.delete(entity);
+    }
+
+    @Override
+    public Page<Card> findAll(Pageable pageable) {
+        throw new UnsupportedOperationException("Method has not supported yet!");
+    }
+
+    @Override
+    public List<Card> findAllByPage(Integer page) {
+        throw new UnsupportedOperationException("Method has not supported yet!");
     }
     
 }
