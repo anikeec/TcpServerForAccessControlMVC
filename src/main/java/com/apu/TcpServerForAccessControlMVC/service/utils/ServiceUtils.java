@@ -6,26 +6,23 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.apu.TcpServerForAccessControlDB.entity.Card;
-import com.apu.TcpServerForAccessControlDB.entity.Device;
 import com.apu.TcpServerForAccessControlDB.interfaces.ActivatableEntity;
 import com.apu.TcpServerForAccessControlDB.interfaces.VisualizableEntity;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.MVCService;
 
-@Component
 public class ServiceUtils<S extends ActivatableEntity> {
     
     private MVCService<S> service;
     
-//    public ServiceUtils(MVCService<S> service) {
-//        super();
-//        this.service = service;
-//    }
-    
-    public void setService(MVCService<S> service) {
+    public ServiceUtils(MVCService<S> service) {
+        super();
         this.service = service;
     }
+    
+//    public void setService(MVCService<S> service) {
+//        this.service = service;
+//    }
 
     public String saveEntity(VisualEntity visualEntity, boolean activeValue) {
         String errorMessage = null;
@@ -52,12 +49,6 @@ public class ServiceUtils<S extends ActivatableEntity> {
             if(c instanceof VisualizableEntity) {
                 entity.addElementToList(((VisualizableEntity)c).getId(), ((VisualizableEntity)c).getDescription());
             }
-//            if(c instanceof Card) {
-//                entity.addElementToList(((Card)c).getCardId(), ((Card)c).getCardId() + " - " + ((Card)c).getCardNumber());
-//            } else 
-//            if(c instanceof Device) {
-//                entity.addElementToList(((Device)c).getDeviceId(), ((Device)c).getDeviceId() + " - " + ((Device)c).getDeviceNumber());
-//            }
         }
         modelAndView.addObject("entity", entity);
         modelAndView.setViewName("activate");

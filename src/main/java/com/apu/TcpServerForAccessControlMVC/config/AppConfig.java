@@ -63,16 +63,12 @@ public class AppConfig {
     
     @Bean(name = "cardServiceUtils")
     ServiceUtils<Card> cardServiceUtils(CardService service) {
-        ServiceUtils<Card> su = new ServiceUtils<Card>();
-        su.setService(service);
-        return su;
+        return new ServiceUtils<Card>(service);
     }
     
     @Bean(name = "deviceServiceUtils")
     ServiceUtils<Device> deviceServiceUtils(DeviceService service) {
-        ServiceUtils<Device> su = new ServiceUtils<Device>();
-        su.setService(service);
-        return su;
+        return new ServiceUtils<Device>(service);
     }
     
 }
