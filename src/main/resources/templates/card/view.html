@@ -29,7 +29,7 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr th:each="card : ${cardList}">
+		    <tr th:each="card : ${page.getContent()}">
 		      <td th:text="${card.cardId}"></td>
 		      <td th:text="${card.cardNumber}"></td>
 		      <td th:text="${card.getUserId().getFirstName()} + ' ' + ${card.getUserId().getSecondName()}"></td>
@@ -37,6 +37,9 @@
 		    </tr>
 		  </tbody>
 		</table>
+		
+		<div th:replace="/../pagination :: pagination"></div>
+		
 	</div>
 
     <div th:replace="/../pagescriptsjs :: pagescriptsjs"></div>

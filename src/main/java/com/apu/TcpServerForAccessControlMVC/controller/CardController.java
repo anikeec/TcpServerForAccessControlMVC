@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
@@ -36,13 +37,14 @@ public class CardController {
     private ActivatableServiceUtils<Card> utils;
     
     @GetMapping("/card/view")
-    public ModelAndView index(Principal principal) {
-        List<Card> cardList = cardService.findAll();
+    public ModelAndView index(Principal principal,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer pageSize) {
 //        for(Card card:cardList) {
 //            card.setUserId(userService.findByUserId(card.getUserId().getUserId()).get(0));
 //        }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("cardList", cardList);
+        utils.setPages(modelAndView, page, pageSize);
         utils.setUserName(modelAndView, principal);
         modelAndView.setViewName("card/view");      
         return modelAndView;

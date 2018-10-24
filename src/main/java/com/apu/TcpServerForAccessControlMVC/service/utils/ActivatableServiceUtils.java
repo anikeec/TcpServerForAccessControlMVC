@@ -14,7 +14,7 @@ public class ActivatableServiceUtils<S extends ActivatableEntity> extends Pageab
     private MvcFullService<S> service;
     
     public ActivatableServiceUtils(MvcFullService<S> service) {
-        super();
+        super(service);
         this.service = service;
     }
 

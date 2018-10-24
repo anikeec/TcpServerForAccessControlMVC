@@ -45,7 +45,7 @@ public class CardService implements MvcFullService<Card> {
 
     @Override
     public Page<Card> findAll(Pageable pageable) {
-        throw new UnsupportedOperationException("Method has not supported yet!");
+        return cardRepository.findAll(pageable);
     }
 
     @Override
