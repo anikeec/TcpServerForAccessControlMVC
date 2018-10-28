@@ -20,6 +20,7 @@ import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtil
 import com.apu.TcpServerForAccessControlRestAPI.CardRest;
 
 @RestController
+@RequestMapping("/card/api")
 public class RestCardController {
     
     private static int PAGE_SIZE = 10;
@@ -31,7 +32,7 @@ public class RestCardController {
     @Qualifier("cardServiceUtils")
     private ActivatableServiceUtils<Card> utils;
     
-    @RequestMapping("/card/api/view")
+    @RequestMapping("/view")
     public List<CardRest> index(Principal principal,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer pageSize) {
