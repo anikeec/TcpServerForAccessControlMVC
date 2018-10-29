@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class RestCardController {
     @Qualifier("cardServiceUtils")
     private ActivatableServiceUtils<Card> utils;
     
-    @RequestMapping("/view")
+    @GetMapping("/view")
     public List<CardRest> index(Principal principal,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer pageSize) {
