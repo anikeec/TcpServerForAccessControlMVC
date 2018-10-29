@@ -16,6 +16,7 @@
         <Property name="ThymeleafLogFilename">thymeleaf.log</Property>
         <Property name="HibernateLogFilename">hibernate.log</Property>
         <Property name="Springlogfilename">spring.log</Property>
+        <Property name="SpringSecuritylogfilename">springSecurity.log</Property>
     </Properties>
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
@@ -47,11 +48,21 @@
             <AppenderRef ref="SysoutFileLogger"/>
         </Async>
         
+        <!-- Logging for Spring Security -->
+        <File name="SpringSecurityLogger" fileName="${SpringSecuritylogfilename}" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
+        </File>
+        <Async name="SpringSecurityAsync">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="SpringSecurityLogger"/>
+        </Async>
+        
         <!-- Logging for Spring -->
         <File name="SpringLogger" fileName="${Springlogfilename}" immediateFlush="true">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %m%n" />
         </File>
         <Async name="SpringAsync">
+            <AppenderRef ref="Console"/>
             <AppenderRef ref="SpringLogger"/>
         </Async>
         
@@ -80,6 +91,11 @@
        <Logger name="sysoutLog" level="ALL" additivity="false">
            <AppenderRef ref="SysoutAsync" />
        </Logger>
+       
+       <!-- Logging for Spring Security -->      
+       <Logger name="org.springframework.security" level="ALL" additivity="false">
+           <AppenderRef ref="SpringSecurityAsync" />
+       </Logger> 
        
        <!-- Logging for Spring -->      
        <Logger name="org.springframework" level="ALL" additivity="false">
