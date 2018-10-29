@@ -21,7 +21,7 @@ import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtil
 import com.apu.TcpServerForAccessControlRestAPI.CardRest;
 
 @RestController
-@RequestMapping("/card/api")
+@RequestMapping("/api/card")
 public class RestCardController {
     
     private static int PAGE_SIZE = 10;
