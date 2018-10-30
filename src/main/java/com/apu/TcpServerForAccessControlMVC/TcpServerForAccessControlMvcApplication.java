@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.apu.TcpServerForAccessControlMVC.logging.LoggingOutputStream;
@@ -26,7 +27,8 @@ public class TcpServerForAccessControlMvcApplication {
     private static final Logger logger = LogManager.getLogger(TcpServerForAccessControlMvcApplication.class);
 
 	public static void main(String[] args) {
-//	    System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("sysoutLog"), Level.ALL), true));
+	    System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "dev");
+	    System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("sysoutLog"), Level.ALL), true));
 		SpringApplication.run(TcpServerForAccessControlMvcApplication.class, args);
 	}
 }

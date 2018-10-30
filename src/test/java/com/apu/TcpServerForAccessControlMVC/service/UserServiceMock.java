@@ -1,46 +1,47 @@
 package com.apu.TcpServerForAccessControlMVC.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
-import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 
 @Service
-@Profile("dev")
-public class UserService {
-
-    @Autowired
-    private SystemUserRepository userRepository;
+@Profile("test")
+public class UserServiceMock extends UserService {
+    
+    List<SystemUser> userCollection = new ArrayList<>();
     
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public List<SystemUser> findAll() {
-        return userRepository.findAll();
+        throw new UnsupportedOperationException("Not implemented, yet");
     }
     
     public List<SystemUser> findByUserId(Integer userId) {
-        return userRepository.findByUserId(userId);
+        throw new UnsupportedOperationException("Not implemented, yet");
     }
     
     public List<SystemUser> findByActive(Boolean active) {
-        return userRepository.findByActive(active);
+        throw new UnsupportedOperationException("Not implemented, yet");
     }
     
-    public List<SystemUser> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public List<SystemUser> findByEmail(String email) {        
+        List<SystemUser> userList = new ArrayList<>();        
+        for(SystemUser user:userCollection) {
+            if(user.getEmail().equals(email))
+                userList.add(user);
+        }
+        return userList;
     }
     
     public SystemUser findUserByEmail(String email) {
-        List<SystemUser> userList = userRepository.findByEmail(email);
+        List<SystemUser> userList = this.findByEmail(email);
         if((userList != null) && (userList.size() > 0))
             return userList.get(0);
         return null;
@@ -48,18 +49,16 @@ public class UserService {
     
     public void saveUser(SystemUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setActive(1);
-//        Role userRole = roleRepository.findByRole("ADMIN");
-//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        userRepository.save(user);
+        this.save(user);
     }
     
     public <S extends SystemUser> S save(S entity) {
-        return userRepository.save(entity);
+        userCollection.add(entity);
+        return entity;
     }
     
     public void delete(SystemUser entity) {
-        userRepository.delete(entity);
+        userCollection.remove(entity);
     }
     
 }
