@@ -1,4 +1,4 @@
-package com.apu.TcpServerForAccessControlMVC.security;
+package com.apu.TcpServerForAccessControlMVC.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
