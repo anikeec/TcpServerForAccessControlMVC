@@ -19,14 +19,14 @@ import com.apu.TcpServerForAccessControlMVC.logging.LoggingOutputStream;
 @EnableCaching
 @EnableJpaRepositories(basePackages= {"com.apu.TcpServerForAccessControlDB.repository"})
 @EntityScan(basePackages = {"com.apu.TcpServerForAccessControlDB.entity"}) 
-@ImportResource("/META-INF/spring/appConfig.xml")
-@PropertySource("application.properties")
+//@ImportResource("/META-INF/spring/appConfig.xml")
+//@PropertySource("application.properties")
 public class TcpServerForAccessControlMvcApplication {
     
     private static final Logger logger = LogManager.getLogger(TcpServerForAccessControlMvcApplication.class);
 
 	public static void main(String[] args) {
-	    System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("sysoutLog"), Level.ALL), true));
+//	    System.setOut(new PrintStream(new LoggingOutputStream(LogManager.getLogger("sysoutLog"), Level.ALL), true));
 		SpringApplication.run(TcpServerForAccessControlMvcApplication.class, args);
 	}
 }
