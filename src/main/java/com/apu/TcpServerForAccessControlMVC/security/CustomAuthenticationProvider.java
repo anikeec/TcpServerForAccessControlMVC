@@ -3,6 +3,7 @@ package com.apu.TcpServerForAccessControlMVC.security;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         
+        Authentication result = null;
+        
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
         
@@ -32,11 +35,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if(user != null) {
             String passwordHash = user.getPassword();
             if(passwordEncoder.matches(password, passwordHash)) { 
-                return new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
+                result = new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
             }
         }
-
-        return null;
+        
+        if (result == null || !result.isAuthenticated()) {
+            throw new AccessDeniedException("User with such username and password has not found.");
+        }
+        
+        return result;
     }
 
     @Override
