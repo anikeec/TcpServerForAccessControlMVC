@@ -3,6 +3,7 @@ package com.apu.TcpServerForAccessControlMVC.config.security;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,12 @@ import com.apu.TcpServerForAccessControlMVC.service.UserService;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class OAuth2ServerConfigurationTest {
+    
+    @Value("${accesscontrol-security.mobile-app-client-id}")
+    private String CLIENT_ID;
+    
+    @Value("${accesscontrol-security.mobile-app-client-secret}")
+    private String CLIENT_PASSWORD;
 
     @Autowired
     private MockMvc mvc;
@@ -64,14 +71,14 @@ public class OAuth2ServerConfigurationTest {
         
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "password");
-        params.add("client_id", TestParameters.TEST_CLIENT_ID);
-        params.add("client_secret", TestParameters.TEST_CLIENT_SECRET);
+        params.add("client_id", CLIENT_ID);
+        params.add("client_secret", CLIENT_PASSWORD);
         params.add("username", TestParameters.TEST_USER_EMAIL);
         params.add("password", TestParameters.TEST_USER_PASSWORD);
         
         mvc.perform(post("/oauth/token")
             .params(params)
-            .with(httpBasic(TestParameters.TEST_CLIENT_ID, TestParameters.TEST_CLIENT_SECRET))
+            .with(httpBasic(CLIENT_ID, CLIENT_PASSWORD))
             .accept("application/json;charset=UTF-8"))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json;charset=UTF-8"))
