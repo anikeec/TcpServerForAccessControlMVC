@@ -23,8 +23,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS, "/api/card/**").permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/api/user/**").permitAll()
             .and()
             .antMatcher("/api/card/**").authorizeRequests()
+            .and()
+            .antMatcher("/api/user/**").authorizeRequests()
             .anyRequest().authenticated();
     }
     
