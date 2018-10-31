@@ -19,6 +19,8 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
     
     private static final String RESOURCE_ID = "restservice";
+    private static final String CLIENT_ID = "copsboot-mobile-client";
+    private static final String CLIENT_PASSWORD = "ccUyb6vS4S8nxfbKPCrN";
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -45,11 +47,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-            .withClient("copsboot-mobile-client")
+            .withClient(CLIENT_ID)
             .authorizedGrantTypes("password", "refresh_token")
             .scopes("mobile_app")
             .resourceIds(RESOURCE_ID)
-            .secret(passwordEncoder.encode("ccUyb6vS4S8nxfbKPCrN"));
+            .secret(passwordEncoder.encode(CLIENT_PASSWORD));
     }
     
     @Override
