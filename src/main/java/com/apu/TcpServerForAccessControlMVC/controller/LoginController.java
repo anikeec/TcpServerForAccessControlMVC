@@ -72,7 +72,7 @@ public class LoginController {
                 if(!user.getUserRoleCollection().contains(userRole))
                     user.getUserRoleCollection().add(userRole);
             }
-            userService.saveUser(user);
+            userService.save(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", user);
             modelAndView.setViewName("login");

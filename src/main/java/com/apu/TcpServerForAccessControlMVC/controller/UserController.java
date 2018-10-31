@@ -89,7 +89,7 @@ public class UserController {
     @RequestMapping(value = "/user/activate", method = RequestMethod.POST)
     public ModelAndView activateUser(@Valid SystemUser user, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<SystemUser> userList = userService.findByUserId(user.getUserId());
+        List<SystemUser> userList = userService.findById(user.getUserId());
         if((userList == null) || (userList.size() == 0)) {
             bindingResult
                 .rejectValue("userId", "error.userId",
@@ -132,7 +132,7 @@ public class UserController {
     @RequestMapping(value = "/user/inactivate", method = RequestMethod.POST)
     public ModelAndView inactivateUser(@Valid SystemUser user, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();        
-        List<SystemUser> userList = userService.findByUserId(user.getUserId());
+        List<SystemUser> userList = userService.findById(user.getUserId());
         if((userList == null) || (userList.size() == 0)) {
             bindingResult
                 .rejectValue("userId", "error.userId",
