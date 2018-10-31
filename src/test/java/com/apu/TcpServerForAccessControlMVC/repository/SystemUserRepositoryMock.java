@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 
@@ -78,6 +82,16 @@ public class SystemUserRepositoryMock implements SystemUserRepository {
 
     @Override
     public void delete(SystemUser entity) {
+        throw new UnsupportedOperationException("Not implemented, yet");
+    }
+
+    @Override
+    public Iterable<SystemUser> findAll(Sort sort) {
+        throw new UnsupportedOperationException("Not implemented, yet");
+    }
+
+    @Override
+    public Page<SystemUser> findAll(Pageable pageable) {
         throw new UnsupportedOperationException("Not implemented, yet");
     }
 

@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +26,13 @@ public class UserServiceMock extends UserService {
         throw new UnsupportedOperationException("Not implemented, yet");
     }
     
-    public List<SystemUser> findByUserId(Integer userId) {
-        throw new UnsupportedOperationException("Not implemented, yet");
+    public List<SystemUser> findById(Integer userId) {
+        List<SystemUser> userList = new ArrayList<>();        
+        for(SystemUser user:userCollection) {
+            if(user.getUserId().equals(userId))
+                userList.add(user);
+        }
+        return userList;
     }
     
     public List<SystemUser> findByActive(Boolean active) {
@@ -52,7 +60,7 @@ public class UserServiceMock extends UserService {
         this.save(user);
     }
     
-    public <S extends SystemUser> S save(S entity) {
+    public SystemUser save(SystemUser entity) {
         userCollection.add(entity);
         return entity;
     }
@@ -60,5 +68,19 @@ public class UserServiceMock extends UserService {
     public void delete(SystemUser entity) {
         userCollection.remove(entity);
     }
+
+    @Override
+    public Page<SystemUser> findAll(Pageable pageable) {
+        Page<SystemUser> page = 
+                new PageImpl<>(userCollection, pageable, userCollection.size());
+        return page;
+    }
+
+    @Override
+    public List<SystemUser> findAllByPage(Integer page) {
+        throw new UnsupportedOperationException("Not implemented, yet");
+    }
+    
+    
     
 }
