@@ -1,6 +1,7 @@
 package com.apu.TcpServerForAccessControlMVC.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +20,12 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
     
     private static final String RESOURCE_ID = "restservice";
-    private static final String CLIENT_ID = "copsboot-mobile-client";
-    private static final String CLIENT_PASSWORD = "ccUyb6vS4S8nxfbKPCrN";
+    
+    @Value("${accesscontrol-security.mobile-app-client-id}")
+    private String CLIENT_ID;
+    
+    @Value("${accesscontrol-security.mobile-app-client-secret}")
+    private String CLIENT_PASSWORD;
 
     @Autowired
     private AuthenticationManager authenticationManager;
