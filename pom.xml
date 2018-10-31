@@ -86,17 +86,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-<!--         <dependency> -->
-<!--             <groupId>mysql</groupId> -->
-<!--             <artifactId>mysql-connector-java</artifactId> -->
-<!--             <scope>runtime</scope> -->
-<!--         </dependency> -->
 
         <!-- Postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+<!--         <dependency> -->
+<!--             <groupId>mysql</groupId> -->
+<!--             <artifactId>mysql-connector-java</artifactId> -->
+<!--             <scope>runtime</scope> -->
+<!--         </dependency> -->
         
         <!-- Redis -->
         <dependency>
@@ -133,6 +133,13 @@
 		  <artifactId>spring-boot-starter-test</artifactId>
 		  <scope>test</scope>
 		</dependency>
+
+        <!-- Database -->
+		<dependency>
+		  <groupId>com.h2database</groupId>
+		  <artifactId>h2</artifactId>
+		  <scope>test</scope>
+		</dependency>
 		
         <!-- Security -->
 		<dependency>
@@ -148,6 +155,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <configuration>
+			      <classpathDependencyExcludes>
+			        <classpathDependencyExclude>org.springframework.boot:spring-boot-starter-data-jpa</classpathDependencyExclude>
+			        <classpathDependencyExclude>org.springframework.boot:spring-boot-starter-jdbc</classpathDependencyExclude>
+			        <classpathDependencyExclude>org.postgresql:postgresql</classpathDependencyExclude>
+			      </classpathDependencyExcludes>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>
