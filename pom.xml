@@ -25,16 +25,20 @@
 	</properties>
 
 	<dependencies>
+	
 	   <dependency>
             <groupId>com.apu</groupId>
             <artifactId>TcpServerForAccessControlDB</artifactId>
             <version>0.0.1</version>
         </dependency>
+        
         <dependency>
             <groupId>com.apu</groupId>
             <artifactId>TcpServerForAccessControlRestAPI</artifactId>
             <version>0.0.1</version>
         </dependency>
+        
+        <!-- Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -45,32 +49,39 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+        <!-- Logging -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        
+        <!-- Thymeleaf -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        
+        <!-- Web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+        <!-- Devtool -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
+		
+        <!-- JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        
+        <!-- JDBC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -80,10 +91,30 @@
 <!--             <artifactId>mysql-connector-java</artifactId> -->
 <!--             <scope>runtime</scope> -->
 <!--         </dependency> -->
+
+        <!-- Postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+        
+        <!-- Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                 <groupId>io.lettuce</groupId>
+                 <artifactId>lettuce-core</artifactId>
+                </exclusion>
+              </exclusions>
+        </dependency>
+        <dependency>
+          <groupId>redis.clients</groupId>
+          <artifactId>jedis</artifactId>
+        </dependency>
+        
+        <!-- Secure -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -92,27 +123,18 @@
 		    <groupId>org.springframework.security.oauth.boot</groupId>
 		    <artifactId>spring-security-oauth2-autoconfigure</artifactId>
 		    <version>2.0.1.RELEASE</version>
-		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-			    <exclusion>
-			     <groupId>io.lettuce</groupId>
-			     <artifactId>lettuce-core</artifactId>
-			    </exclusion>
-			  </exclusions>
-        </dependency>
-        <dependency>
-		  <groupId>redis.clients</groupId>
-		  <artifactId>jedis</artifactId>
-		</dependency>
+		</dependency>	
 		
+        <!-- Test -->
+                
+        <!-- Starter -->
 		<dependency>
 		  <groupId>org.springframework.boot</groupId>
 		  <artifactId>spring-boot-starter-test</artifactId>
 		  <scope>test</scope>
 		</dependency>
+		
+        <!-- Security -->
 		<dependency>
 		  <groupId>org.springframework.security</groupId>
 		  <artifactId>spring-security-test</artifactId>
