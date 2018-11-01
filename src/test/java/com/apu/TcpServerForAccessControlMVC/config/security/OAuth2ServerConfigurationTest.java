@@ -63,7 +63,7 @@ public class OAuth2ServerConfigurationTest {
     private PasswordEncoder passwordEncoder;
     
     @Test
-    @Ignore
+//    @Ignore
     public void testGetAccessTokenAsAdminAndUser() throws Exception {
         
         SecurityMockMvcUtils.addTestUserToDatabase(userService, userRoleService, passwordEncoder);

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.entity.UserRole;
+import com.apu.TcpServerForAccessControlDtoAPI.UserDto;
 import com.apu.TcpServerForAccessControlMVC.PageWrapper;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
-import com.apu.TcpServerForAccessControlRestAPI.UserRest;
 
 @RestController
 @RequestMapping("/api/user")
@@ -30,7 +30,7 @@ private static int PAGE_SIZE = 10;
     private UserService userService;    
     
     @GetMapping("/view")
-    public List<UserRest> index(Principal principal,
+    public List<UserDto> index(Principal principal,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer pageSize) {
         
@@ -45,7 +45,7 @@ private static int PAGE_SIZE = 10;
         PageWrapper<SystemUser> pageWrapper = new PageWrapper<>(userPage, "");
         
         List<SystemUser> userList = pageWrapper.getContent();
-        List<UserRest> restList = new ArrayList<>();
+        List<UserDto> restList = new ArrayList<>();
         for(SystemUser u:userList) {
             
             List<String> cardCollection = new ArrayList<>();
@@ -63,7 +63,7 @@ private static int PAGE_SIZE = 10;
             }
             
             restList.add(                   
-                    new UserRest(
+                    new UserDto(
                             u.getUserId(),
                             u.getFirstName(),
                             u.getSecondName(),

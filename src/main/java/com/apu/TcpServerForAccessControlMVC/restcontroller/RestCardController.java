@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apu.TcpServerForAccessControlDB.entity.Card;
+import com.apu.TcpServerForAccessControlDtoAPI.CardDto;
 import com.apu.TcpServerForAccessControlMVC.PageWrapper;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtils;
-import com.apu.TcpServerForAccessControlRestAPI.CardRest;
 
 @RestController
 @RequestMapping("/api/card")
@@ -34,7 +34,7 @@ public class RestCardController {
     private ActivatableServiceUtils<Card> utils;
     
     @GetMapping("/view")
-    public List<CardRest> index(Principal principal,
+    public List<CardDto> index(Principal principal,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer pageSize) {
         
@@ -49,9 +49,9 @@ public class RestCardController {
         PageWrapper<Card> pageWrapper = new PageWrapper<>(accessMessagePage, "");
         
         List<Card> cardList = pageWrapper.getContent();
-        List<CardRest> cardRestList = new ArrayList<>();
+        List<CardDto> cardRestList = new ArrayList<>();
         for(Card c:cardList) {
-            cardRestList.add(new CardRest(c.getCardId(), c.getCardNumber(), c.getActive(), c.getUserId().getUserId()));
+            cardRestList.add(new CardDto(c.getCardId(), c.getCardNumber(), c.getActive(), c.getUserId().getUserId()));
         }
         return cardRestList;
     }

@@ -34,7 +34,7 @@
         
         <dependency>
             <groupId>com.apu</groupId>
-            <artifactId>TcpServerForAccessControlRestAPI</artifactId>
+            <artifactId>TcpServerForAccessControlDtoAPI</artifactId>
             <version>0.0.1</version>
         </dependency>
         
