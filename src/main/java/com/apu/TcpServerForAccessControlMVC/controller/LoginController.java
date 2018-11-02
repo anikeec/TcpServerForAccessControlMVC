@@ -16,15 +16,17 @@ import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.entity.UserRole;
 import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @Controller
 public class LoginController {
     
     @Autowired
-    private UserService userService;
+    private MvcUserService userService;
     
     @Autowired
-    private UserRoleService userRoleService;
+    private MvcUserRoleService userRoleService;
 
     @RequestMapping(value={"/login"}, method = RequestMethod.GET)
     public ModelAndView login(){

@@ -17,6 +17,7 @@ import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 import com.apu.TcpServerForAccessControlMVC.security.ApplicationUserDetailsService;
 import com.apu.TcpServerForAccessControlMVC.security.CustomAuthenticationProvider;
 import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
 
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -67,7 +68,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     SystemUserRepository userRepository;
     
     @Autowired
-    UserRoleService userRoleService;
+    MvcUserRoleService userRoleService;
     
     @Bean 
     public UserDetailsService userDetailsService() {

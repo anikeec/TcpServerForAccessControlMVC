@@ -14,16 +14,17 @@ import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.entity.UserRole;
 import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
 
 @Service
 public class ApplicationUserDetailsService implements UserDetailsService {
     
     private final SystemUserRepository userRepository;
     
-    private final UserRoleService userRoleService;
+    private final MvcUserRoleService userRoleService;
     
     @Autowired
-    public ApplicationUserDetailsService(SystemUserRepository userRepository, UserRoleService userRoleService) {
+    public ApplicationUserDetailsService(SystemUserRepository userRepository, MvcUserRoleService userRoleService) {
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
     }

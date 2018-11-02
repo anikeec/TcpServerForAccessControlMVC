@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 //@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserService userService;
+    private MvcUserService userService;
     
     @Autowired
     private PasswordEncoder passwordEncoder;

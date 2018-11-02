@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
-import com.apu.TcpServerForAccessControlMVC.service.i.MvcFullService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @Service
 @Profile("dev")
-public class UserService implements MvcFullService<SystemUser> {
+public class UserService implements MvcUserService {
 
     @Autowired
     private SystemUserRepository userRepository;

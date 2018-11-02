@@ -12,10 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @Service
 @Profile("test")
-public class UserServiceMock extends UserService {
+public class UserServiceMock implements MvcUserService {
     
     List<SystemUser> userCollection = new ArrayList<>();
     

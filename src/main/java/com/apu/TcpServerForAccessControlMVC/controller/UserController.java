@@ -17,12 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @Controller
 public class UserController {
     
     @Autowired
-    private UserService userService;
+    private MvcUserService userService;
     
     @GetMapping("/user/view")
     public ModelAndView index(Principal principal) {

@@ -3,13 +3,16 @@ package com.apu.TcpServerForAccessControlMVC.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.apu.TcpServerForAccessControlDB.entity.UserRole;
 import com.apu.TcpServerForAccessControlDB.repository.UserRoleRepository;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
 
 @Service
-public class UserRoleService {
+@Profile("dev")
+public class UserRoleService implements MvcUserRoleService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;

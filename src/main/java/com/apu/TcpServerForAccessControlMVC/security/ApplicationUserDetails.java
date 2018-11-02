@@ -21,9 +21,9 @@ public class ApplicationUserDetails extends org.springframework.security.core.us
         this.user = user;
     }
     
-//    public UserId getUserId() {
-//        return userId;
-//    }
+    public Integer getUserId() {
+        return user.getUserId();
+    }
     
    
     private static Collection<SimpleGrantedAuthority> createAuthorities(Set<UserRole> roles) {

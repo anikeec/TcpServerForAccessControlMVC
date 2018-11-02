@@ -21,6 +21,7 @@ import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 import com.apu.TcpServerForAccessControlMVC.service.utils.ActivatableServiceUtils;
 
 @Controller
@@ -30,7 +31,7 @@ public class CardController {
     private CardService cardService;
     
     @Autowired
-    private UserService userService;    
+    private MvcUserService userService;    
 
     @Autowired
     @Qualifier("cardServiceUtils")

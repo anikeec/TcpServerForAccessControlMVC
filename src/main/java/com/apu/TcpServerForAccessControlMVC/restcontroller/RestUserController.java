@@ -19,6 +19,7 @@ import com.apu.TcpServerForAccessControlDB.entity.UserRole;
 import com.apu.TcpServerForAccessControlDtoAPI.UserDto;
 import com.apu.TcpServerForAccessControlMVC.PageWrapper;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @RestController
 @RequestMapping("/api/user")
@@ -27,7 +28,7 @@ public class RestUserController {
 private static int PAGE_SIZE = 10;
     
     @Autowired
-    private UserService userService;    
+    private MvcUserService userService;    
     
     @GetMapping("/view")
     public List<UserDto> index(Principal principal,

@@ -35,6 +35,8 @@ import com.apu.TcpServerForAccessControlMVC.mock.TestUsers;
 import com.apu.TcpServerForAccessControlMVC.security.SecurityMockMvcUtils;
 import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -54,10 +56,10 @@ public class OAuth2ServerConfigurationTest {
     private MockMvc mvc;
     
     @Autowired
-    private UserService userService;
+    private MvcUserService userService;
     
     @Autowired
-    private UserRoleService userRoleService;
+    private MvcUserRoleService userRoleService;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
