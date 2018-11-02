@@ -16,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 import com.apu.TcpServerForAccessControlMVC.security.ApplicationUserDetailsService;
 import com.apu.TcpServerForAccessControlMVC.security.CustomAuthenticationProvider;
+import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
 
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -65,9 +66,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     SystemUserRepository userRepository;
     
+    @Autowired
+    UserRoleService userRoleService;
+    
     @Bean 
     public UserDetailsService userDetailsService() {
-        return new ApplicationUserDetailsService(userRepository);
+        return new ApplicationUserDetailsService(userRepository, userRoleService);
     }
     
 }
