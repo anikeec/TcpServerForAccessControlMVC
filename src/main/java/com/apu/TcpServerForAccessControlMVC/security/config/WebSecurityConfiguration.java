@@ -13,11 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.apu.TcpServerForAccessControlDB.repository.SystemUserRepository;
 import com.apu.TcpServerForAccessControlMVC.security.ApplicationUserDetailsService;
 import com.apu.TcpServerForAccessControlMVC.security.CustomAuthenticationProvider;
-import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
 import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -65,14 +64,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     
     @Autowired
-    SystemUserRepository userRepository;
+    MvcUserService userService;
     
     @Autowired
     MvcUserRoleService userRoleService;
     
     @Bean 
     public UserDetailsService userDetailsService() {
-        return new ApplicationUserDetailsService(userRepository, userRoleService);
+        return new ApplicationUserDetailsService(userService, userRoleService);
     }
     
 }
