@@ -20,14 +20,20 @@ import com.apu.TcpServerForAccessControlDB.entity.UserRole;
 import com.apu.TcpServerForAccessControlMVC.TestParameters;
 import com.apu.TcpServerForAccessControlMVC.service.UserRoleService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserRoleService;
+import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
 
 public class SecurityMockMvcUtils {
     
-    public static void addTestUserToDatabase(UserService userService, 
-                                                UserRoleService userRoleService, 
+    public static void addTestUserToDatabase(MvcUserService userService, 
+                                                MvcUserRoleService userRoleService, 
                                                 PasswordEncoder passwordEncoder) {
         UserRole userRoleAdmin = userRoleService.findUserRoleByDescription("ROLE_ADMIN");
+        if(userRoleAdmin == null)
+            userRoleAdmin = userRoleService.save(new UserRole("ROLE_ADMIN"));
         UserRole userRoleUser = userRoleService.findUserRoleByDescription("ROLE_USER");
+        if(userRoleUser == null)
+            userRoleUser = userRoleService.save(new UserRole("ROLE_USER"));
         
         Set<UserRole> userRoleList = new HashSet<>();
         userRoleList.add(userRoleAdmin);
