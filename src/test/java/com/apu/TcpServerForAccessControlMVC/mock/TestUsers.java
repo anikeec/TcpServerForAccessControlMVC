@@ -1,7 +1,7 @@
 package com.apu.TcpServerForAccessControlMVC.mock;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +17,7 @@ public class TestUsers {
     private static final SystemUser USER_TEST = new SystemUser(); 
     
     public static SystemUser getUser() {
-        List<UserRole> userRoleCollection = new ArrayList<>();
+        Set<UserRole> userRoleCollection = new HashSet<>();
         userRoleCollection.add(new UserRole("ROLE_USER"));        
         
         USER_TEST.setUserId(TestParameters.TEST_USER_ID);

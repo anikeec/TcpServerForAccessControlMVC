@@ -5,8 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +29,7 @@ public class SecurityMockMvcUtils {
         UserRole userRoleAdmin = userRoleService.findUserRoleByDescription("ROLE_ADMIN");
         UserRole userRoleUser = userRoleService.findUserRoleByDescription("ROLE_USER");
         
-        List<UserRole> userRoleList = new ArrayList<>();
+        Set<UserRole> userRoleList = new HashSet<>();
         userRoleList.add(userRoleAdmin);
         userRoleList.add(userRoleUser);
         

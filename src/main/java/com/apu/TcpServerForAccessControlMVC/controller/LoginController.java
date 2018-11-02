@@ -1,7 +1,7 @@
 package com.apu.TcpServerForAccessControlMVC.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -65,7 +65,7 @@ public class LoginController {
         } else {
             UserRole userRole = userRoleService.findUserRoleByDescription("ROLE_USER");
             if(user.getUserRoleCollection() == null) {
-                List<UserRole> userRoleList = new ArrayList<>();
+                Set<UserRole> userRoleList = new HashSet<>();
                 userRoleList.add(userRole);
                 user.setUserRoleCollection(userRoleList);
             } else {
