@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.apu.TcpServerForAccessControlDB.entity.Card;
 import com.apu.TcpServerForAccessControlDB.entity.SystemUser;
 import com.apu.TcpServerForAccessControlMVC.entity.VisualEntity;
+import com.apu.TcpServerForAccessControlMVC.restcontroller.utils.SpringRestClient;
 import com.apu.TcpServerForAccessControlMVC.service.CardService;
 import com.apu.TcpServerForAccessControlMVC.service.UserService;
 import com.apu.TcpServerForAccessControlMVC.service.i.MvcUserService;
@@ -31,7 +32,7 @@ public class CardController {
     private CardService cardService;
     
     @Autowired
-    private MvcUserService userService;    
+    private MvcUserService userService;     
 
     @Autowired
     @Qualifier("cardServiceUtils")
@@ -43,7 +44,7 @@ public class CardController {
             @RequestParam(value = "size", required = false) Integer pageSize) {
 //        for(Card card:cardList) {
 //            card.setUserId(userService.findByUserId(card.getUserId().getUserId()).get(0));
-//        }
+//        }        
         ModelAndView modelAndView = new ModelAndView();
         utils.setPages(modelAndView, page, pageSize);
         utils.setUserName(modelAndView, principal);
