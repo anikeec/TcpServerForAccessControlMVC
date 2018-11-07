@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.AbstractEnvironment;
@@ -17,7 +16,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.apu.TcpServerForAccessControlMVC.logging.LoggingOutputStream;
 
 @SpringBootApplication
-@EnableCaching
 @EnableJpaRepositories(basePackages= {"com.apu.TcpServerForAccessControlDB.repository"})
 @EntityScan(basePackages = {"com.apu.TcpServerForAccessControlDB.entity"}) 
 //@ImportResource("/META-INF/spring/appConfig.xml")
