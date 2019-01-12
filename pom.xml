@@ -38,6 +38,12 @@
             <version>0.0.1</version>
         </dependency>
         
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
         <!-- Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
