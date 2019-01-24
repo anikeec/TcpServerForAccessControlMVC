@@ -3,43 +3,31 @@ package com.apu.TcpServerForAccessControlMVC.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VisualEntity {
-    private String pageName;
-    private String elementName;
-    private String actionValue;
-    private List<Pair> elementsList = new ArrayList<>();
-    private Integer entityId;    
+import lombok.Getter;
+import lombok.Setter;
 
-    public String getPageName() {
-        return pageName;
-    }
-    public void setPageName(String pageName) {
-        this.pageName = pageName;
-    }
-    public String getElementName() {
-        return elementName;
-    }
-    public void setElementName(String elementName) {
-        this.elementName = elementName;
-    }
-    public String getActionValue() {
-        return actionValue;
-    }
-    public void setActionValue(String actionValue) {
-        this.actionValue = actionValue;
-    }
+public class VisualEntity {
+    
+    @Getter @Setter
+    private String pageName;
+    
+    @Getter @Setter
+    private String elementName;
+    
+    @Getter @Setter
+    private String actionValue;
+    
+    private List<Pair> elementsList = new ArrayList<>();
+    
+    @Getter @Setter
+    private Integer entityId;    
+    
     public List<Pair> getElementsList() {
         return elementsList;
     }
     public void addElementToList(Integer id, String value) {
         elementsList.add(new Pair(id, value));
     }    
-    public Integer getEntityId() {
-        return entityId;
-    }
-    public void setEntityId(Integer entityId) {
-        this.entityId = entityId;
-    }
 
     class Pair {
         public Integer id;
